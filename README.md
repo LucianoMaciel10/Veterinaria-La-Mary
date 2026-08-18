@@ -1,2 +1,11 @@
 # Veterinaria-La-Mary
-UNER - Trabajo Final Integrador - Introducción al desarrollo web
+
+## 👥 Integrantes
+
+| Nombre | 
+|---|
+| Valeria Nelli |
+| Ariel Guas |
+| Luciano Maciel |
+| Eliana Jovanovich |
+| Miguel Casaretto |
