@@ -1,3 +1,7 @@
+main {
+    padding-bottom: 30px;
+}
+
 h3 {
     text-align: center;
     color: var(--color-fondo-oscuro);
@@ -7,7 +11,7 @@ h3 {
 
 .hero-institucional {
     text-align: center;
-    padding: 3rem 1rem 2rem;
+    padding: 3rem 2rem;
     background-color: var(--color-fondo-oscuro);
     color: var(--color-texto-claro);
     margin-top: 8vh;

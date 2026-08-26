@@ -127,18 +127,20 @@ nav a img {
 
 main {
     background-color: var(--color-fondo-principal);
-    min-height: calc(100vh - 8vh - 60px);
-    padding-bottom: 2rem;
+    min-height: 82vh;
+    margin-top: 8vh;
 }
 
 footer {
     background-color: var(--color-fondo-oscuro);
     color: var(--color-texto-claro);
-    width: 100%;
     text-align: center;
     border-top: var(--color-borde) 2px solid;
     font-size: 0.9rem;
-    padding: 1.5rem 1rem;
+    height: 10vh;
+    display: grid;
+    place-content: center;
+    padding: 0 2rem;
 }
 
 @media (min-width: 425px) {
