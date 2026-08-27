@@ -64,73 +64,8 @@
   border-radius: 20px;
 }
 
-@media (min-width: 400px) {
-  .hero h2 {
-    font-size: 1.4rem;
-  }
-
-  .hero-frase {
-    font-size: 1.1rem;
-  }
-
-  .texto-hero {
-    font-size: 1rem;
-  }
-}
-
-@media (min-width: 768px) {
-  .imagen-veterinaria {
-    width: 100%;
-  }
-
-  .hero h2 {
-    font-size: 1.8rem;
-  }
-
-  .hero-frase {
-    font-size: 1.2rem;
-  }
-
-  .texto-hero {
-    font-size: 1.1rem;
-  }
-}
-
-/* Responsive */
-@media (min-width: 1024px) {
-  .hero {
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-  }
-
-  .hero h2 {
-    font-size: 3rem;
-  }
-
-  .hero-contenido {
-    width: 50%;
-  }
-
-  .boton-profesionales {
-    max-width: max-content;
-    padding: 16px 25px;
-  }
-}
-
-@media (min-width: 1400px) {
-  .hero {
-    gap: 50px;
-  }
-
-  .imagen-veterinaria {
-    max-width: 700px;
-  }
-}
-
 .seccion-veterinarios {
-  min-height: 82vh;
+  min-height: 60vh;
   text-align: center;
   padding: 40px 20px;
   background-color: var(--color-texto-claro);
@@ -207,4 +142,75 @@
   font-weight: bold;
   color: #6b4636;
   font-size: 1.1rem;
+}
+
+@media (min-width: 400px) {
+  .hero h2 {
+    font-size: 1.4rem;
+  }
+
+  .hero-frase {
+    font-size: 1.1rem;
+  }
+
+  .texto-hero {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .imagen-veterinaria {
+    width: 100%;
+  }
+
+  .hero h2 {
+    font-size: 1.8rem;
+  }
+
+  .hero-frase {
+    font-size: 1.2rem;
+  }
+
+  .texto-hero {
+    font-size: 1.1rem;
+  }
+}
+
+@media (min-width: 870px) {
+  .contenedor-tarjetas {
+    padding-bottom: 60px;
+  }
+}
+
+/* Responsive */
+@media (min-width: 1024px) {
+  .hero {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .hero h2 {
+    font-size: 3rem;
+  }
+
+  .hero-contenido {
+    width: 50%;
+  }
+
+  .boton-profesionales {
+    max-width: max-content;
+    padding: 16px 25px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .hero {
+    gap: 50px;
+  }
+
+  .imagen-veterinaria {
+    max-width: 700px;
+  }
 }

@@ -34,6 +34,10 @@
     box-sizing: border-box;
 }
 
+a {
+    text-decoration: none;
+}
+
 header h1 {
     color: var(--color-texto-claro);
     font-size: 1.5rem;
@@ -59,7 +63,6 @@ nav ul {
 }
 
 nav li a {
-    text-decoration: none;
     color: var(--color-texto-claro);
     font-size: 1.1rem;
     padding: 1.6vh;
@@ -67,6 +70,10 @@ nav li a {
     justify-content: center;
     align-items: center;
     gap: 8px;
+}
+
+nav ul a:hover {
+    opacity: 0.7;
 }
 
 nav a img {
@@ -86,6 +93,7 @@ nav a img {
 
 .contenedor-h1 img {
     height: 5vh;
+    width: min-content;
 }
 
 .contenedor-h1 .huella-perro {
@@ -127,20 +135,62 @@ nav a img {
 
 main {
     background-color: var(--color-fondo-principal);
-    min-height: 82vh;
     margin-top: 8vh;
 }
 
 footer {
     background-color: var(--color-fondo-oscuro);
     color: var(--color-texto-claro);
+    border-top: 2px solid var(--color-borde);
+    padding: 30px 6% 18px;
+}
+
+.footer-contenido {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-seccion h3 {
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+}
+
+.footer-seccion ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-seccion li {
+    margin-bottom: 7px;
+}
+
+.footer-seccion a {
+    color: var(--color-texto-claro);
+    font-size: 0.95rem;
+}
+
+.footer-seccion a:hover {
+    opacity: 0.7;
+}
+
+.footer-separador {
+    max-width: 1200px;
+    margin: 25px auto 18px;
+    border-top: 1px solid rgba(255, 246, 238, 0.25);
+}
+
+.footer-inferior {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
     text-align: center;
-    border-top: var(--color-borde) 2px solid;
-    font-size: 0.9rem;
-    height: 10vh;
-    display: grid;
-    place-content: center;
-    padding: 0 2rem;
+    font-size: 0.85rem;
 }
 
 @media (min-width: 425px) {
@@ -177,6 +227,22 @@ footer {
 
     footer {
         font-size: 1.1rem;
+    }
+
+    .footer-contenido {
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 60px;
+    }
+
+    .footer-seccion {
+        flex: 1;
+    }
+
+    .footer-inferior {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
     }
 
     .nav-button {

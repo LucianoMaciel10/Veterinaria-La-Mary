@@ -2,7 +2,7 @@ main {
     padding-bottom: 30px;
 }
 
-h3 {
+.contenedor-titulo-section h3, .datos-section h3 {
     text-align: center;
     color: var(--color-fondo-oscuro);
     font-size: 1.5rem;
