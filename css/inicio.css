@@ -37,6 +37,10 @@
   color: #6b4636;
 }
 
+#profesionales {
+  scroll-margin-top: 8vh;
+}
+
 /* Botón */
 .boton-profesionales {
   display: inline-block;
@@ -51,7 +55,7 @@
 }
 
 .boton-profesionales:hover {
-  background-color: #e89268;
+  background-color: var(--color-acento);
 }
 
 .imagen-veterinaria {
@@ -126,8 +130,13 @@
 }
 
 .seccion-veterinarios {
+  min-height: 82vh;
   text-align: center;
   padding: 40px 20px;
+  background-color: var(--color-texto-claro);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .seccion-veterinarios h2 {
@@ -142,12 +151,13 @@
   justify-content: center;
   gap: 25px;
   flex-wrap: wrap;
+  position: relative;
 }
 
 
 .tarjeta-vet {
   background-color: #ffffff;
-  border: 2px solid #f2a77f;
+  border: 2px solid var(--color-acento);
   border-radius: 12px;
   padding: 25px 20px;
   width: 260px;

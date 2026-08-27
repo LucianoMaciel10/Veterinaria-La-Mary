@@ -12,7 +12,7 @@ h3 {
 .hero-institucional {
     text-align: center;
     padding: 3rem 2rem;
-    background-color: var(--color-fondo-oscuro);
+    background-color: var(--color-acento);
     color: var(--color-texto-claro);
     margin-top: 8vh;
 }
