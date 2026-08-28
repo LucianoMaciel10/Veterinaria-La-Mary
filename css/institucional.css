@@ -94,57 +94,6 @@ main {
     left: 0;
 }
 
-.container-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-}
-
-.dato-card {
-    display: grid;
-    place-content: center;
-    text-align: center;
-    background-color: var(--color-fondo-principal);
-    border-radius: 10px;
-    border: 1px solid var(--color-acento);
-    width: 15rem;
-    height: 15rem;
-    gap: 10px;
-}
-
-.dato-card img {
-    width: 40px;
-    height: 40px;
-    filter: sepia(1) saturate(3) hue-rotate(-20deg);
-    margin: 0 auto;
-}
-
-.dato-card h4 {
-    color: var(--color-fondo-oscuro);
-    font-size: 1.1rem;
-    font-family: 'Outfit', sans-serif;
-}
-
-.dato-card p {
-    color: var(--color-fondo-oscuro);
-    font-size: 0.95rem;
-    line-height: 1.6;
-    margin: 0;
-}
-
-.datos-section {
-    background-color: var(--color-texto-claro);
-    border-radius: 12px;
-    padding: 2rem 4rem;
-    margin: 0 auto;
-    box-shadow: 0 4px 12px rgba(61, 36, 23, 0.1);
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
 .equipo-card {
     background-color: var(--color-fondo-principal);
     border-radius: 10px;

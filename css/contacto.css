@@ -149,6 +149,10 @@ nav li a.active {
 /* ==========================================================================
    FORMULARIO
    ========================================================================== */
+#formulario-contacto {
+  scroll-margin-top: 8vh;
+}
+
 .card {
   background-color: var(--color-texto-claro);
   border: 1px solid var(--color-acento);
