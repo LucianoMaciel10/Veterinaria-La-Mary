@@ -6,6 +6,7 @@
     <title>Veterinaria La Mary</title>
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/inicio.css" />
+    <link rel="stylesheet" href="css/contacto.css">
   </head>
   <body>
     <header>
@@ -53,7 +54,138 @@
       </nav>
     </header>
     <main>
-      <!--Aca agregar el contenido principal de la pagina Contacto-->
+      <!-- HERO -->
+      <section class="hero-contacto">
+        <span class="hero-badge">Estamos para ayudarte</span>
+        <h2>Contactate con nosotros</h2>
+        <p class="subtitle">
+          Envianos tu consulta o visitanos: estamos para cuidar a tu mascota.
+        </p>
+      </section>
+
+      <!-- TARJETAS DE CONTACTO -->
+      <section class="info-section tarjetas-contacto">
+        <article class="dato-card">
+          <div class="icon-wrapper">
+            <img src="assets/home.png" alt="Dirección" />
+          </div>
+          <h3>Ubicación</h3>
+          <p>
+            Av. San Martín 1250<br />
+            Paraná, Entre Ríos (3100)
+          </p>
+        </article>
+
+        <article class="dato-card">
+          <div class="icon-wrapper">
+            <img src="assets/phone-plus.png" alt="Teléfono" />
+          </div>
+          <h3>Teléfono</h3>
+          <p>
+            <a href="tel:+543434567890">+54 343 456-7890</a>
+          </p>
+        </article>
+
+        <article class="dato-card">
+          <div class="icon-wrapper">
+            <img src="assets/paw.png" alt="Correo electrónico" />
+          </div>
+          <h3>Correo</h3>
+          <p>
+            <a href="mailto:contacto@veterinariamary.com.ar"
+              >contacto@veterinariamary.com.ar</a
+            >
+          </p>
+        </article>
+
+        <article class="dato-card">
+          <div class="icon-wrapper">
+            <img src="assets/terms-info.png" alt="Horarios" />
+          </div>
+          <h3>Horarios</h3>
+          <p>
+            Lun a Vie: 8:00 - 20:00<br />
+            Sábados: 9:00 - 13:00
+          </p>
+        </article>
+      </section>
+
+      <!-- FORMULARIO -->
+      <section class="info-section">
+        <div class="card">
+          <div class="contenedor-titulo-section">
+            <div class="contenedor-card-icon">
+              <div class="card-icon">
+                <img src="assets/phone-plus.png" alt="Enviar mensaje" />
+              </div>
+            </div>
+            <h3 class="titulo-section">Envianos un mensaje</h3>
+          </div>
+          <p class="card-descripcion">
+            Completá el formulario y te responderemos a la brevedad.
+          </p>
+
+          <form id="formContacto" class="contacto-form" novalidate>
+            <div class="fila-campos">
+              <div class="campo-form">
+                <label for="nombre">Tu Nombre</label>
+                <input
+                  type="text"
+                  id="nombre"
+                  name="nombre"
+                  required
+                  minlength="3"
+                  placeholder="Ej: Juan Pérez"
+                />
+                <span class="error-mensaje" data-error-de="nombre"></span>
+              </div>
+
+              <div class="campo-form">
+                <label for="email">Correo Electrónico</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  placeholder="Ej: juan@correo.com"
+                />
+                <span class="error-mensaje" data-error-de="email"></span>
+              </div>
+            </div>
+
+            <div class="campo-form">
+              <label for="mascota"
+                >Nombre de tu mascota
+                <span class="opcional">(opcional)</span></label
+              >
+              <input
+                type="text"
+                id="mascota"
+                name="mascota"
+                placeholder="Ej: Firulais"
+              />
+              <span class="error-mensaje" data-error-de="mascota"></span>
+            </div>
+
+            <div class="campo-form">
+              <label for="mensaje">Mensaje</label>
+              <textarea
+                id="mensaje"
+                name="mensaje"
+                rows="5"
+                required
+                minlength="10"
+                placeholder="Contanos en qué podemos ayudarte..."
+              ></textarea>
+              <span class="error-mensaje" data-error-de="mensaje"></span>
+            </div>
+
+            <button type="submit" class="boton-enviar">Enviar consulta</button>
+
+            <div id="mensajeEstado" class="mensaje-estado invisible"></div>
+          </form>
+        </div>
+      </section>
     </main>
     <footer>
       <div class="footer-contenido">
