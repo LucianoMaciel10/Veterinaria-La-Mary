@@ -95,16 +95,10 @@ a {
   min-height: 8vh;
   padding-top: 0;
   padding-bottom: 0;
-  position: fixed !important;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
-  align-items: flex-start;
 }
 
 .navbar > .container-fluid {
   flex-wrap: nowrap !important;
-  align-items: center;
   min-height: 8vh;
 }
 
@@ -172,8 +166,6 @@ a {
 .navbar-toggler {
   border-color: var(--color-borde);
   flex-shrink: 0;
-  box-shadow: none !important;
-  outline: none !important;
   padding: clamp(2px, 1vh, 8px) 10px;
 }
 
