@@ -4,52 +4,68 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Veterinaria La Mary - Información Institucional</title>
+    <link
+      href="node_modules/bootstrap/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/institucional.css" />
+    <script
+      src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+      defer
+    ></script>
   </head>
   <body>
     <header>
-      <nav>
-        <button class="nav-button">
-          <img
-            class="flecha-abajo"
-            src="assets/angle-double-small-down.png"
-            alt="flechas hacia abajo"
-          />
-          <img
-            class="flecha-arriba invisible"
-            src="assets/angle-double-small-up.png"
-            alt="flechas hacia arriba"
-          />
-        </button>
-        <a href="index.html" class="contenedor-h1">
-          <img
-            class="huella-perro"
-            src="assets/paw.png"
-            alt="logo huella de perro"
-          />
-          <h1>Veterinaria <span style="white-space: nowrap">La Mary</span></h1>
-        </a>
-        <ul class="invisible">
-          <li>
-            <a href="index.html">
-              <img src="assets/home.png" alt="logo de inicio" />
-              Inicio
-            </a>
-          </li>
-          <li>
-            <a href="institucional.html">
-              <img src="assets/terms-info.png" alt="logo de inicio" />
-              Institucional
-            </a>
-          </li>
-          <li>
-            <a href="contacto.html">
-              <img src="assets/phone-plus.png" alt="logo de inicio" />
-              Contacto
-            </a>
-          </li>
-        </ul>
+      <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container-fluid px-4">
+          <a class="navbar-brand" href="index.html">
+            <img
+              class="huella-perro"
+              src="assets/paw.png"
+              alt="logo huella de perro"
+            />
+            <h1>
+              Veterinaria <span style="white-space: nowrap">La Mary</span>
+            </h1>
+          </a>
+          <button
+            class="navbar-toggler ms-auto"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#menuPrincipal"
+            aria-controls="menuPrincipal"
+            aria-expanded="false"
+            aria-label="Abrir menú"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="menuPrincipal">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="index.html">
+                  <img src="assets/home.png" alt="logo de inicio" />
+                  Inicio
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="institucional.html">
+                  <img
+                    src="assets/terms-info.png"
+                    alt="logo de institucional"
+                  />
+                  Institucional
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="contacto.html">
+                  <img src="assets/phone-plus.png" alt="logo de contacto" />
+                  Contacto
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
       </nav>
     </header>
     <main>
@@ -150,44 +166,50 @@
       </section>
     </main>
     <footer>
-      <div class="footer-contenido">
-        <div class="footer-seccion">
-          <h3>Navegación</h3>
-          <ul>
-            <li><a href="index.html">Inicio</a></li>
-            <li><a href="institucional.html">Institucional</a></li>
-            <li><a href="contacto.html">Contacto</a></li>
-          </ul>
-        </div>
+      <div
+        class="container-fluid px-0"
+        style="max-width: 1200px; margin: 0 auto"
+      >
+        <div class="row g-4">
+          <div class="col-12 col-md-4 footer-seccion">
+            <h3>Navegación</h3>
+            <ul>
+              <li><a href="index.html">Inicio</a></li>
+              <li><a href="institucional.html">Institucional</a></li>
+              <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+          </div>
 
-        <div class="footer-seccion">
-          <h3>Servicios</h3>
-          <ul>
-            <li><a href="index.html#profesionales">Profesionales</a></li>
-          </ul>
-        </div>
+          <div class="col-12 col-md-4 footer-seccion">
+            <h3>Servicios</h3>
+            <ul>
+              <li><a href="index.html#profesionales">Profesionales</a></li>
+            </ul>
+          </div>
 
-        <div class="footer-seccion">
-          <h3>Contacto</h3>
-          <ul>
-            <li>
-              <a href="contacto.html#formulario-contacto"
-                >Formulario de contacto</a
-              >
-            </li>
-            <li><a href="#">Whatsapp</a></li>
-            <li><a href="#">Instagram</a></li>
-          </ul>
+          <div class="col-12 col-md-4 footer-seccion">
+            <h3>Contacto</h3>
+            <ul>
+              <li>
+                <a href="contacto.html#formulario-contacto"
+                  >Formulario de contacto</a
+                >
+              </li>
+              <li><a href="#">Whatsapp</a></li>
+              <li><a href="#">Instagram</a></li>
+            </ul>
+          </div>
         </div>
+        <div class="footer-separador"></div>
       </div>
 
-      <div class="footer-separador"></div>
-
-      <div class="footer-inferior">
-        <p>© 2026 Veterinaria La Mary</p>
-        <p>Trabajo Final Integrador — UNER</p>
+      <div
+        class="footer-inferior d-flex flex-column flex-md-row justify-content-md-between text-center text-md-start gap-1"
+        style="max-width: 1200px; margin: 0 auto"
+      >
+        <p class="mb-0">© 2026 Veterinaria La Mary</p>
+        <p class="mb-0">Trabajo Final Integrador — UNER</p>
       </div>
     </footer>
-    <script src="js/base.js"></script>
   </body>
 </html>
