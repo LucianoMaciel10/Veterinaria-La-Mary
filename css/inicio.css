@@ -1,8 +1,11 @@
-
-
 #profesionales {
   scroll-margin-top: 8vh;
 }
+
+#inicio {
+  min-height: 92vh;
+}
+
 #inicio h2,
 #inicio p {
   color: #6b4636;
@@ -19,20 +22,20 @@
   color: #6b4636;
 }
 
-/* Responsive */
+#texto-hero p {
+  font-size: 1.05rem;
+}
 
+.boton-hero {
+  font-size: 1rem;
+}
 
-  .hero h2 {
-    font-size: 3rem;
+@media (min-width: 570px) {
+  .boton-hero {
+    font-size: 1.25rem;
   }
-
-  .hero-contenido {
-    width: 50%;
+  
+  #texto-hero p {
+    font-size: 1.25rem;
   }
-
-  .boton-profesionales {
-    max-width: max-content;
-    padding: 16px 25px;
-  }
-
-
+}
