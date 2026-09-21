@@ -3,7 +3,6 @@ main {
 }
 
 .hero-institucional {
-    text-align: center;
     padding: 60px 20px 50px;
     background:
         radial-gradient(
@@ -17,31 +16,23 @@ main {
 }
 
 .hero-badge {
-    display: inline-block;
     background-color: rgba(255, 246, 238, 0.18);
     border: 1px solid rgba(255, 246, 238, 0.4);
     padding: 6px 18px;
-    border-radius: 999px;
     font-size: 0.85rem;
-    font-weight: 600;
     letter-spacing: 0.4px;
-    text-transform: uppercase;
-    margin-bottom: 16px;
 }
 
 .hero-institucional h2 {
     font-family: 'Outfit', sans-serif;
     font-size: 2.2rem;
-    font-weight: 700;
     margin-bottom: 10px;
 }
 
 .hero-institucional .subtitle {
     font-size: 1.1rem;
-    font-weight: 300;
     opacity: 0.92;
     max-width: 560px;
-    margin: 0 auto;
 }
 
 @media (min-width: 900px) {
@@ -73,9 +64,6 @@ main {
     width: 50px;
     height: 50px;
     background: linear-gradient(135deg, #b25b29 0%, #d97f3c 55%, #f0955c 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .card-icon img {
@@ -85,16 +73,11 @@ main {
 }
 
 .valores-list {
-    display: flex;
-    flex-direction: column;
     gap: 0.75rem;
 }
 
 .valores-list li {
     color: var(--color-fondo-oscuro);
-    line-height: 1.5;
-    padding-left: 1.5rem;
-    position: relative;
 }
 
 .valores-list li::before {
