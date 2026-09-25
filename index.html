@@ -17,11 +17,14 @@
   </head>
   <body>
     <header>
-      <nav class="navbar navbar-expand-lg fixed-top">
-        <div class="container-fluid px-4">
-          <a class="navbar-brand" href="index.html">
+      <nav class="navbar navbar-expand-lg fixed-top py-0">
+        <div class="container-fluid px-4 flex-nowrap">
+          <a
+            class="navbar-brand d-flex align-items-center flex-shrink-1 py-0"
+            href="index.html"
+          >
             <img
-              class="huella-perro"
+              class="huella-perro w-auto flex-shrink-0"
               src="assets/paw.png"
               alt="logo huella de perro"
             />
@@ -30,7 +33,7 @@
             </h1>
           </a>
           <button
-            class="navbar-toggler ms-auto"
+            class="navbar-toggler ms-auto flex-shrink-0"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#menuPrincipal"
@@ -40,17 +43,28 @@
           >
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="menuPrincipal">
-            <ul class="navbar-nav ms-auto">
+          <div class="collapse navbar-collapse w-100" id="menuPrincipal">
+            <ul class="navbar-nav ms-auto py-1 gap-lg-2">
               <li class="nav-item">
-                <a class="nav-link" href="index.html">
-                  <img src="assets/home.png" alt="logo de inicio" />
+                <a
+                  class="nav-link d-flex align-items-center justify-content-center justify-content-lg-start"
+                  href="index.html"
+                >
+                  <img
+                    class="flex-shrink-0"
+                    src="assets/home.png"
+                    alt="logo de inicio"
+                  />
                   Inicio
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="institucional.html">
+                <a
+                  class="nav-link d-flex align-items-center justify-content-center justify-content-lg-start"
+                  href="institucional.html"
+                >
                   <img
+                    class="flex-shrink-0"
                     src="assets/terms-info.png"
                     alt="logo de institucional"
                   />
@@ -58,8 +72,15 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="contacto.html">
-                  <img src="assets/phone-plus.png" alt="logo de contacto" />
+                <a
+                  class="nav-link d-flex align-items-center justify-content-center justify-content-lg-start"
+                  href="contacto.html"
+                >
+                  <img
+                    class="flex-shrink-0"
+                    src="assets/phone-plus.png"
+                    alt="logo de contacto"
+                  />
                   Contacto
                 </a>
               </li>
@@ -101,7 +122,7 @@
 
                 <a
                   href="#profesionales"
-                  class="btn boton-hero px-4 py-3 fw-bold rounded-3 shadow-sm mt-2"
+                  class="btn boton-hero px-4 py-3 fw-bold rounded-3 shadow-sm mt-2 border-0"
                 >
                   Ver profesionales
                 </a>
@@ -196,7 +217,7 @@
         <div class="row g-4">
           <div class="col-12 col-md-4 footer-seccion">
             <h3>Navegación</h3>
-            <ul>
+            <ul class="list-unstyled">
               <li><a href="index.html">Inicio</a></li>
               <li><a href="institucional.html">Institucional</a></li>
               <li><a href="contacto.html">Contacto</a></li>
@@ -205,14 +226,14 @@
 
           <div class="col-12 col-md-4 footer-seccion">
             <h3>Servicios</h3>
-            <ul>
+            <ul class="list-unstyled">
               <li><a href="#profesionales">Profesionales</a></li>
             </ul>
           </div>
 
           <div class="col-12 col-md-4 footer-seccion">
             <h3>Contacto</h3>
-            <ul>
+            <ul class="list-unstyled">
               <li>
                 <a href="contacto.html#formulario-contacto"
                   >Formulario de contacto</a

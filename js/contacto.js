@@ -1,11 +1,19 @@
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("formContacto");
   const estado = document.getElementById("mensajeEstado");
+  let timeoutId;
 
   const mostrarMensaje = (tipo, texto) => {
-    estado.className = `mensaje-estado ${tipo}`;
+    clearInterval(timeoutId);
+    estado.classList.remove("error");
+    estado.classList.remove("exito");
+    estado.classList.add(tipo);
     estado.textContent = texto;
     estado.classList.remove("invisible");
+
+    timeoutId = setTimeout(() => {
+      estado.classList.add("invisible");
+    }, 4000);
   };
 
   const marcarCampo = (input, valido) => {
@@ -27,15 +35,16 @@ document.addEventListener("DOMContentLoaded", () => {
       valido = patron.test(input.value.trim());
       if (!valido) span.textContent = "Ingresá un correo válido.";
     }
+    span.classList.remove("invisible");
 
-    if (valido) span.textContent = "";
+    if (valido) span.classList.add("invisible");
     marcarCampo(input, valido);
     return valido;
   };
 
   const limpiarError = (e) => {
     const span = document.querySelector(`[data-error-de="${e.target.id}"]`);
-    span.textContent = "";
+    span.classList.add("invisible");
     e.target.classList.remove("invalido");
   };
 
