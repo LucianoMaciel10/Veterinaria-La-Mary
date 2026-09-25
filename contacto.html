@@ -69,53 +69,53 @@
       </nav>
     </header>
     <main>
-      <section class="hero-contacto">
-        <span class="hero-badge">Estamos para ayudarte</span>
-        <h2>Contactate con nosotros</h2>
-        <p class="subtitle">
+      <section class="hero-contacto text-center">
+        <span class="hero-badge d-inline-block rounded-pill fw-semibold text-uppercase mb-3">Estamos para ayudarte</span>
+        <h2 class="fw-bold">Contactate con nosotros</h2>
+        <p class="subtitle fw-light mx-auto my-0">
           Envianos tu consulta o visitanos: estamos para cuidar a tu mascota.
         </p>
       </section>
 
-      <section class="info-section tarjetas-contacto">
-        <article class="dato-card">
-          <div class="icon-wrapper">
+      <section class="info-section tarjetas-contacto d-grid mx-auto my-0">
+        <article class="dato-card text-center rounded-4">
+          <div class="icon-wrapper d-flex align-items-center justify-content-center rounded-circle mx-auto">
             <img src="assets/home.png" alt="Dirección" />
           </div>
-          <h3>Ubicación</h3>
+          <h3 class="mb-2">Ubicación</h3>
           <p>
             Av. San Martín 1250<br />
             Paraná, Entre Ríos (3100)
           </p>
         </article>
 
-        <article class="dato-card">
-          <div class="icon-wrapper">
+        <article class="dato-card text-center rounded-4">
+          <div class="icon-wrapper d-flex align-items-center justify-content-center rounded-circle mx-auto">
             <img src="assets/phone-plus.png" alt="Teléfono" />
           </div>
-          <h3>Teléfono</h3>
+          <h3 class="mb-2">Teléfono</h3>
           <p>
-            <a href="tel:+543434567890">+54 343 456-7890</a>
+            <a href="tel:+543434567890" class="opacity-100 fw-medium text-decoration-none">+54 343 456-7890</a>
           </p>
         </article>
 
-        <article class="dato-card">
-          <div class="icon-wrapper">
+        <article class="dato-card text-center rounded-4">
+          <div class="icon-wrapper d-flex align-items-center justify-content-center rounded-circle mx-auto">
             <img src="assets/paw.png" alt="Correo electrónico" />
           </div>
-          <h3>Correo</h3>
+          <h3 class="mb-2">Correo</h3>
           <p>
-            <a href="mailto:contacto@veterinariamary.com.ar"
+            <a href="mailto:contacto@veterinariamary.com.ar" class="opacity-100 fw-medium text-decoration-none"
               >contacto@veterinariamary.com.ar</a
             >
           </p>
         </article>
 
-        <article class="dato-card">
-          <div class="icon-wrapper">
+        <article class="dato-card text-center rounded-4">
+          <div class="icon-wrapper d-flex align-items-center justify-content-center rounded-circle mx-auto">
             <img src="assets/terms-info.png" alt="Horarios" />
           </div>
-          <h3>Horarios</h3>
+          <h3 class="mb-2">Horarios</h3>
           <p>
             Lun a Vie: 8:00 - 20:00<br />
             Sábados: 9:00 - 13:00
@@ -123,28 +123,29 @@
         </article>
       </section>
 
-      <section id="formulario-contacto" class="info-section">
-        <div class="card">
-          <div class="contenedor-titulo-section">
-            <div class="contenedor-card-icon">
-              <div class="card-icon">
+      <section id="formulario-contacto" class="info-section mx-auto my-0">
+        <div class="card rounded-4">
+          <div class="contenedor-titulo-section d-flex align-items-center mb-2">
+            <div class="contenedor-card-icon flex-shrink-0">
+              <div class="card-icon d-flex align-items-center justify-content-center">
                 <img src="assets/phone-plus.png" alt="Enviar mensaje" />
               </div>
             </div>
-            <h3 class="titulo-section">Envianos un mensaje</h3>
+            <h3 class="titulo-section fs-4 m-0">Envianos un mensaje</h3>
           </div>
           <p class="card-descripcion">
             Completá el formulario y te responderemos a la brevedad.
           </p>
 
-          <form id="formContacto" class="contacto-form" novalidate>
-            <div class="fila-campos">
-              <div class="campo-form">
-                <label for="nombre">Tu Nombre</label>
+          <form id="formContacto" class="contacto-form d-flex flex-column" novalidate>
+            <div class="fila-campos d-grid">
+              <div class="campo-form d-flex flex-column">
+                <label for="nombre" class="fw-semibold">Tu Nombre</label>
                 <input
                   type="text"
                   id="nombre"
                   name="nombre"
+                  class="w-100 fs-6"
                   required
                   minlength="3"
                   placeholder="Ej: Juan Pérez"
@@ -152,12 +153,13 @@
                 <span class="error-mensaje" data-error-de="nombre"></span>
               </div>
 
-              <div class="campo-form">
-                <label for="email">Correo Electrónico</label>
+              <div class="campo-form d-flex flex-column">
+                <label for="email" class="fw-semibold">Correo Electrónico</label>
                 <input
                   type="email"
                   id="email"
                   name="email"
+                  class="w-100 fs-6"
                   required
                   placeholder="Ej: juan@correo.com"
                 />
@@ -165,25 +167,27 @@
               </div>
             </div>
 
-            <div class="campo-form">
-              <label for="mascota"
+            <div class="campo-form d-flex flex-column">
+              <label for="mascota" class="fw-semibold"
                 >Nombre de tu mascota
-                <span class="opcional">(opcional)</span></label
+                <span class="opcional fw-normal">(opcional)</span></label
               >
               <input
                 type="text"
                 id="mascota"
                 name="mascota"
+                class="w-100 fs-6"
                 placeholder="Ej: Firulais"
               />
               <span class="error-mensaje" data-error-de="mascota"></span>
             </div>
 
-            <div class="campo-form">
-              <label for="mensaje">Mensaje</label>
+            <div class="campo-form d-flex flex-column">
+              <label for="mensaje" class="fw-semibold">Mensaje</label>
               <textarea
                 id="mensaje"
                 name="mensaje"
+                class="w-100 fs-6"
                 rows="5"
                 required
                 minlength="10"
@@ -192,9 +196,9 @@
               <span class="error-mensaje" data-error-de="mensaje"></span>
             </div>
 
-            <button type="submit" class="boton-enviar">Enviar consulta</button>
+            <button type="submit" class="boton-enviar align-self-start text-white border-0 fw-semibold fs-6">Enviar consulta</button>
 
-            <div id="mensajeEstado" class="mensaje-estado invisible"></div>
+            <div id="mensajeEstado" class="mensaje-estado text-center fw-medium px-3 invisible"></div>
           </form>
         </div>
       </section>
@@ -245,5 +249,6 @@
         <p class="mb-0">Trabajo Final Integrador — UNER</p>
       </div>
     </footer>
+    <script src="js/contacto.js"></script>
   </body>
 </html>
