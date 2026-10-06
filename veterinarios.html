@@ -118,17 +118,58 @@
       </nav>
     </header>
     <main id="veterinarios">
-      <!-- Acá va el contenido de la página -->
-    </main>
-    <footer>
-      <div
-        class="container-fluid px-0"
-        style="max-width: 1200px; margin: 0 auto"
-      >
-        <div class="row g-4">
-          <div class="col-12 col-md-4 footer-seccion">
-            <h3>Navegación</h3>
-            <ul class="list-unstyled">
+      <section class="container my-5">
+  <h2 class="mb-4">Gestión de Veterinarios</h2>
+
+  <!-- FORMULARIO DE VETERINARIOS -->
+  <form id="formVeterinario" class="card p-4 shadow-sm mb-5">
+    <!-- Campo oculto para guardar el ID cuando se edita -->
+    <input type="hidden" id="idVeterinario" />
+
+    <div class="row g-3">
+      <!-- Matrícula -->
+      <div class="col-md-6">
+        <label for="matricula" class="form-label">Matrícula</label>
+        <input type="number" class="form-control" id="matricula" required />
+      </div>
+
+      <!-- Nombre -->
+      <div class="col-md-6">
+        <label for="nombre" class="form-label">Nombre Completo</label>
+        <input type="text" class="form-control" id="nombre" required />
+      </div>
+
+      <!-- Especialización -->
+      <div class="col-md-6">
+        <label for="especializacion" class="form-label">Especialización</label>
+        <input type="text" class="form-control" id="especializacion" required />
+      </div>
+
+      <!-- Valor Consulta -->
+      <div class="col-md-6">
+        <label for="valorConsulta" class="form-label">Valor de Consulta ($)</label>
+        <input type="number" step="0.01" class="form-control" id="valorConsulta" required />
+      </div>
+    </div>
+<!-- Botones del Formulario -->
+    <div class="mt-4 d-flex gap-2">
+      <button type="submit" class="btn btn-primary" id="btnGuardar">Guardar Veterinario</button>
+      <button type="button" class="btn btn-secondary" id="btnCancelar">Cancelar</button>
+    </div>
+  </form>
+</section>
+
+</main>
+
+<footer>
+  <div
+    class="container-fluid px-0"
+    style="max-width: 1200px; margin: 0 auto"
+  >
+    <div class="row g-4">
+      <div class="col-12 col-md-4 footer-seccion">
+        <h3>Navegación</h3>
+        <ul class="list-unstyled">
               <li><a href="index.html">Inicio</a></li>
               <li><a href="institucional.html">Institucional</a></li>
               <li><a href="contacto.html">Contacto</a></li>
@@ -168,5 +209,7 @@
         <p class="mb-0">Trabajo Final Integrador — UNER</p>
       </div>
     </footer>
+    <script src="js/storage.js"></script>
+    <script src="js/veterinarios.js"></script>
   </body>
 </html>
