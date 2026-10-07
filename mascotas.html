@@ -118,7 +118,52 @@
       </nav>
     </header>
     <main id="mascotas">
-      <!-- Acá va el contenido de la página -->
+      <section class="container my-5">
+        <h2 class="mb-4">Gestión de Mascotas</h2>
+
+        <!-- FORMULARIO DE MASCOTAS -->
+        <form id="formMascota" class="card p-4 shadow-sm mb-5">
+          <!-- Campo oculto para guardar el ID cuando se edita -->
+          <input type="hidden" id="idMascota" />
+
+          <div class="row g-3">
+            <!-- Nombre Mascota -->
+            <div class="col-md-6">
+              <label for="nombreMascota" class="form-label">Nombre Mascota</label>
+              <input type="text" class="form-control" id="nombreMascota" required />
+            </div>
+
+            <!-- Nombre Dueño -->
+            <div class="col-md-6">
+              <label for="nombreDuenio" class="form-label">Nombre Dueño</label>
+              <input type="text" class="form-control" id="nombreDuenio" required />
+            </div>
+
+            <!-- Color -->
+            <div class="col-md-6">
+              <label for="color" class="form-label">Color</label>
+              <input type="text" class="form-control" id="color" required />
+            </div>
+
+            <!-- Edad -->
+            <div class="col-md-6">
+              <label for="edad" class="form-label">Edad (años)</label>
+              <input type="number" step="1" min="0" class="form-control" id="edad" required />
+            </div>
+
+            <!-- Peso -->
+            <div class="col-md-6">
+              <label for="peso" class="form-label">Peso (kg)</label>
+              <input type="number" step="0.01" min="0" class="form-control" id="peso" required />
+            </div>
+          </div>
+          <!-- Botones del Formulario -->
+          <div class="mt-4 d-flex gap-2">
+            <button type="submit" class="btn text-white" style="background-color: #d97f3c; border-color: #d97f3c;" id="btnGuardar">Guardar Mascota</button>
+            <button type="button" class="btn text-white" style="background-color: #b25b29;" id="btnCancelar">Cancelar</button>
+          </div>
+        </form>
+      </section>
     </main>
     <footer>
       <div
