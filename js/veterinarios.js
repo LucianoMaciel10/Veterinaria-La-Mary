@@ -6,6 +6,9 @@ const nombreInput = document.getElementById('nombre');
 const especializacionInput = document.getElementById('especializacion');
 const valorConsultaInput = document.getElementById('valorConsulta');
 const btnCancelar = document.getElementById('btnCancelar');
+const cuerpoTablaVeterinarios = document.getElementById(
+  'cuerpoTablaVeterinarios'
+);
 
 //  EVENTO AL ENVIAR EL FORMULARIO (SUBMIT)
 formVeterinario.addEventListener('submit', function (e) {
@@ -100,3 +103,84 @@ function limpiarFormulario() {
 }
 
 btnCancelar.addEventListener('click', limpiarFormulario);
+
+// Muestra los veterinarios guardados en la tabla.
+function renderTabla() {
+  const listaVeterinarios = leerDatos('veterinarios');
+  cuerpoTablaVeterinarios.replaceChildren();
+
+  if (listaVeterinarios.length === 0) {
+    const fila = document.createElement('tr');
+    const celda = document.createElement('td');
+
+    celda.colSpan = 5;
+    celda.className = 'text-center text-muted py-4';
+    celda.textContent = 'Todavía no hay veterinarios registrados.';
+
+    fila.appendChild(celda);
+    cuerpoTablaVeterinarios.appendChild(fila);
+    return;
+  }
+
+  listaVeterinarios.forEach(function (veterinario) {
+    const fila = document.createElement('tr');
+
+    const datos = [
+      veterinario.matricula,
+      veterinario.nombre,
+      veterinario.especializacion,
+      '$' + Number(veterinario.valorConsulta).toLocaleString('es-AR')
+    ];
+
+    datos.forEach(function (dato) {
+      const celda = document.createElement('td');
+      celda.textContent = dato;
+      fila.appendChild(celda);
+    });
+
+    const celdaAcciones = document.createElement('td');
+    celdaAcciones.className = 'd-flex gap-2';
+
+    const botonEditar = document.createElement('button');
+    botonEditar.type = 'button';
+    botonEditar.className = 'btn btn-sm btn-primary';
+    botonEditar.textContent = 'Editar';
+    botonEditar.addEventListener('click', function () {
+      cargarEnFormulario(veterinario.idVeterinario);
+    });
+
+    const botonEliminar = document.createElement('button');
+    botonEliminar.type = 'button';
+    botonEliminar.className = 'btn btn-sm btn-danger';
+    botonEliminar.textContent = 'Eliminar';
+    botonEliminar.addEventListener('click', function () {
+      eliminarVeterinario(veterinario.idVeterinario);
+    });
+
+    celdaAcciones.append(botonEditar, botonEliminar);
+    fila.appendChild(celdaAcciones);
+    cuerpoTablaVeterinarios.appendChild(fila);
+  });
+}
+
+// Elimina un veterinario después de pedir confirmación.
+function eliminarVeterinario(id) {
+  const confirmar = confirm(
+    '¿Está seguro de que desea eliminar este veterinario?'
+  );
+
+  if (!confirmar) {
+    return;
+  }
+
+  const listaVeterinarios = leerDatos('veterinarios');
+  const listaActualizada = listaVeterinarios.filter(function (veterinario) {
+    return veterinario.idVeterinario !== id;
+  });
+
+  guardarDatos('veterinarios', listaActualizada);
+  renderTabla();
+}
+
+// Dibuja la tabla al abrir la página.
+renderTabla();
