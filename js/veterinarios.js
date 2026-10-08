@@ -9,6 +9,7 @@ const btnCancelar = document.getElementById('btnCancelar');
 const cuerpoTablaVeterinarios = document.getElementById(
   'cuerpoTablaVeterinarios'
 );
+const cantidadVeterinarios = document.getElementById("cantidadVeterinarios")
 
 //  EVENTO AL ENVIAR EL FORMULARIO (SUBMIT)
 formVeterinario.addEventListener('submit', function (e) {
@@ -94,6 +95,8 @@ function cargarEnFormulario(id) {
     especializacionInput.value = vet.especializacion;
     valorConsultaInput.value = vet.valorConsulta;
   }
+
+  window.scrollTo({ top: 0, behavior: "smooth" }); // se mueve la pantalla hacia el fomulario
 }
 
 //  LIMPIAR FORMULARIO
@@ -108,6 +111,7 @@ btnCancelar.addEventListener('click', limpiarFormulario);
 function renderTabla() {
   const listaVeterinarios = leerDatos('veterinarios');
   cuerpoTablaVeterinarios.replaceChildren();
+  cantidadVeterinarios.textContent = listaVeterinarios.length;
 
   if (listaVeterinarios.length === 0) {
     const fila = document.createElement('tr');
@@ -129,7 +133,10 @@ function renderTabla() {
       veterinario.matricula,
       veterinario.nombre,
       veterinario.especializacion,
-      '$' + Number(veterinario.valorConsulta).toLocaleString('es-AR')
+      new Intl.NumberFormat('es-AR', {
+        style: 'currency',
+        currency: 'ARS'
+      }).format(veterinario.valorConsulta)
     ];
 
     datos.forEach(function (dato) {
@@ -143,7 +150,9 @@ function renderTabla() {
 
     const botonEditar = document.createElement('button');
     botonEditar.type = 'button';
-    botonEditar.className = 'btn btn-sm btn-primary';
+    botonEditar.className = 'btn btn-sm';
+    botonEditar.style.backgroundColor = "#d97f3c";
+    botonEditar.style.color = "white";
     botonEditar.textContent = 'Editar';
     botonEditar.addEventListener('click', function () {
       cargarEnFormulario(veterinario.idVeterinario);
@@ -171,6 +180,10 @@ function eliminarVeterinario(id) {
 
   if (!confirmar) {
     return;
+  }
+
+  if (idInput.value === id) {
+    limpiarFormulario()
   }
 
   const listaVeterinarios = leerDatos('veterinarios');
