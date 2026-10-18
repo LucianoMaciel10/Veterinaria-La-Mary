@@ -1,0 +1,89 @@
+/* Estilos compartidos de las páginas de administración (mascotas y veterinarios) */
+
+/* Formulario */
+main form.card {
+  background-color: var(--color-texto-claro);
+  border: 1px solid var(--color-borde);
+}
+
+main .form-label {
+  font-weight: 500;
+  color: var(--color-fondo-oscuro);
+}
+
+main .form-control {
+  border-color: var(--color-borde);
+}
+
+main .form-control:focus {
+  border-color: var(--color-acento);
+  box-shadow: 0 0 0 0.25rem rgba(240, 149, 92, 0.25);
+}
+
+/* Aviso de edición: se ve mientras se modifica un registro existente */
+main form.card.en-edicion {
+  border-color: var(--color-acento);
+  outline: 3px solid rgba(240, 149, 92, 0.35);
+}
+
+.aviso-edicion {
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  background-color: #ffeedd;
+  border-left: 4px solid var(--color-acento);
+  border-radius: 0.375rem;
+  color: var(--color-fondo-oscuro);
+}
+
+/* Botones (usan las variables de Bootstrap para hover, click y foco) */
+.btn-sitio {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--color-borde);
+  --bs-btn-border-color: var(--color-borde);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: color-mix(in srgb, var(--color-borde) 88%, #000);
+  --bs-btn-hover-border-color: color-mix(in srgb, var(--color-borde) 88%, #000);
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: color-mix(in srgb, var(--color-borde) 80%, #000);
+  --bs-btn-active-border-color: color-mix(in srgb, var(--color-borde) 80%, #000);
+  --bs-btn-focus-shadow-rgb: 178, 91, 41;
+}
+
+.btn-sitio-oscuro {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--color-fondo-oscuro);
+  --bs-btn-border-color: var(--color-fondo-oscuro);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: color-mix(in srgb, var(--color-fondo-oscuro) 88%, #fff);
+  --bs-btn-hover-border-color: color-mix(in srgb, var(--color-fondo-oscuro) 88%, #fff);
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: color-mix(in srgb, var(--color-fondo-oscuro) 78%, #fff);
+  --bs-btn-active-border-color: color-mix(in srgb, var(--color-fondo-oscuro) 78%, #fff);
+  --bs-btn-focus-shadow-rgb: 61, 36, 23;
+}
+
+/* Contador junto al título de la tabla */
+.contador {
+  background: linear-gradient(135deg, var(--color-acento), var(--color-borde));
+}
+
+/* Tabla: columnas de datos del mismo ancho y columna de acciones fija */
+main .table {
+  --bs-table-bg: var(--color-texto-claro);
+  --bs-table-striped-bg: #ffeedd;
+  --bs-table-hover-bg: #ffe3c9;
+  --bs-table-border-color: rgba(178, 91, 41, 0.25);
+  border: 1px solid var(--color-borde);
+  table-layout: fixed;
+  min-width: 760px;
+}
+
+main .table th:last-child {
+  width: 200px;
+}
+
+main .table thead th {
+  background-color: var(--color-fondo-oscuro);
+  color: var(--color-texto-claro);
+  border-color: var(--color-fondo-oscuro);
+}
