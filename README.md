@@ -28,3 +28,7 @@
 ```bash
    npx vite
 ```
+ 
+## 🔐 Acceso de administración
+ 
+Usuario de prueba (API DummyJSON): `emilys` / `emilyspass`.

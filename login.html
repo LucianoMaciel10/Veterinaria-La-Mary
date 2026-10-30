@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | Veterinaria La Mary</title>
+    <link
+      href="node_modules/bootstrap/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/administracion.css" />
+    <script
+      src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+      defer
+    ></script>
+    <script src="js/auth.js" defer></script>
+    <script src="js/login.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-xxl fixed-top py-0">
+        <div class="container-fluid px-4 flex-nowrap">
+          <a
+            class="navbar-brand d-flex align-items-center flex-shrink-1 py-0"
+            href="index.html"
+          >
+            <img
+              class="huella-perro w-auto flex-shrink-0"
+              src="assets/paw.png"
+              alt="logo huella de perro"
+            />
+            <h1>
+              Veterinaria <span style="white-space: nowrap">La Mary</span>
+            </h1>
+          </a>
+          <button
+            class="navbar-toggler ms-auto flex-shrink-0"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#menuPrincipal"
+            aria-controls="menuPrincipal"
+            aria-expanded="false"
+            aria-label="Abrir menú"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse w-100" id="menuPrincipal">
+            <ul class="navbar-nav ms-auto py-1 gap-xxl-2">
+              <li class="nav-item">
+                <a
+                  class="nav-link d-flex align-items-center justify-content-center justify-content-xxl-start"
+                  href="index.html"
+                >
+                  <img
+                    class="flex-shrink-0"
+                    src="assets/home.png"
+                    alt="logo de inicio"
+                  />
+                  Inicio
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link d-flex align-items-center justify-content-center justify-content-xxl-start"
+                  href="institucional.html"
+                >
+                  <img
+                    class="flex-shrink-0"
+                    src="assets/terms-info.png"
+                    alt="logo de institucional"
+                  />
+                  Institucional
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link d-flex align-items-center justify-content-center justify-content-xxl-start"
+                  href="contacto.html"
+                >
+                  <img
+                    class="flex-shrink-0"
+                    src="assets/phone-plus.png"
+                    alt="logo de contacto"
+                  />
+                  Contacto
+                </a>
+              </li>
+              <li class="nav-item" data-sesion="sin">
+                <a
+                  class="nav-link d-flex align-items-center justify-content-center justify-content-xxl-start active"
+                  aria-current="page"
+                  href="login.html"
+                >
+                  <img
+                    class="flex-shrink-0"
+                    src="assets/login.svg"
+                    alt="logo de ingresar"
+                  />
+                  Ingresar
+                </a>
+              </li>
+              <li class="nav-item dropdown d-none" data-sesion="con">
+                <a
+                  class="nav-link dropdown-toggle d-flex align-items-center justify-content-center justify-content-xxl-start"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <img
+                    class="flex-shrink-0"
+                    src="assets/user-md.png"
+                    alt="logo de administración"
+                  />
+                  Administración
+                </a>
+                <ul class="dropdown-menu dropdown-menu-xxl-end">
+                  <li>
+                    <a
+                      class="dropdown-item text-center text-xxl-start"
+                      href="mascotas.html"
+                      >Mascotas</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item text-center text-xxl-start"
+                      href="veterinarios.html"
+                      >Veterinarios</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item text-center text-xxl-start"
+                      href="turnos.html"
+                      >Turnos</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item text-center text-xxl-start"
+                      href="historia-clinica.html"
+                      >Historia clínica</a
+                    >
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item d-none" data-sesion="con">
+                <a
+                  class="nav-link d-flex align-items-center justify-content-center justify-content-xxl-start"
+                  href="#"
+                  data-accion="cerrar-sesion"
+                >
+                  <img
+                    class="flex-shrink-0"
+                    src="assets/logout.svg"
+                    alt="logo de cerrar sesión"
+                  />
+                  Cerrar sesión
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main id="login">
+      <section class="container my-5">
+        <h2 class="mb-4">Iniciar sesión</h2>
+      </section>
+    </main>
+    <footer>
+      <div
+        class="container-fluid px-0"
+        style="max-width: 1200px; margin: 0 auto"
+      >
+        <div class="row g-4">
+          <div class="col-12 col-md-4 footer-seccion">
+            <h3>Navegación</h3>
+            <ul class="list-unstyled">
+              <li><a href="index.html">Inicio</a></li>
+              <li><a href="institucional.html">Institucional</a></li>
+              <li><a href="contacto.html">Contacto</a></li>
+              <li data-sesion="sin"><a href="login.html">Ingresar</a></li>
+              <li class="d-none" data-sesion="con">
+                <a href="mascotas.html">Mascotas</a>
+              </li>
+              <li class="d-none" data-sesion="con">
+                <a href="veterinarios.html">Veterinarios</a>
+              </li>
+              <li class="d-none" data-sesion="con">
+                <a href="turnos.html">Turnos</a>
+              </li>
+              <li class="d-none" data-sesion="con">
+                <a href="historia-clinica.html">Historia clínica</a>
+              </li>
+              <li class="d-none" data-sesion="con">
+                <a href="#" data-accion="cerrar-sesion">Cerrar sesión</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-12 col-md-4 footer-seccion">
+            <h3>Servicios</h3>
+            <ul class="list-unstyled">
+              <li><a href="index.html#profesionales">Profesionales</a></li>
+            </ul>
+          </div>
+
+          <div class="col-12 col-md-4 footer-seccion">
+            <h3>Contacto</h3>
+            <ul class="list-unstyled">
+              <li>
+                <a href="contacto.html#formulario-contacto"
+                  >Formulario de contacto</a
+                >
+              </li>
+              <li><a href="#">Whatsapp</a></li>
+              <li><a href="#">Instagram</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-separador"></div>
+      </div>
+
+      <div
+        class="footer-inferior d-flex flex-column flex-md-row justify-content-md-between text-center text-md-start gap-1"
+        style="max-width: 1200px; margin: 0 auto"
+      >
+        <p class="mb-0">© 2026 Veterinaria La Mary</p>
+        <p class="mb-0">Trabajo Final Integrador — UNER</p>
+      </div>
+    </footer>
+  </body>
+</html>
