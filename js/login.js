@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (response.ok) {
                 // guardo el token y lo dejo pasar al inicio
-                sessionStorage.setItem('token', data.token);
+                sessionStorage.setItem('token', data.accessToken);
                 window.location.href = 'index.html';
             } else {
                 // si le erró a la clave muestro el cartelito rojo
