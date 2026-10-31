@@ -1,0 +1,14 @@
+/* Página de login: sin navbar ni footer, con el fondo en toda la pantalla */
+body.pagina-login {
+  background-color: #ffd9b3;
+}
+
+/* Pisa el main de base.css (que le pone fondo y margen superior) */
+body.pagina-login main {
+  background-color: transparent;
+  margin-top: 0;
+}
+
+.login-contenedor {
+  max-width: 420px;
+}

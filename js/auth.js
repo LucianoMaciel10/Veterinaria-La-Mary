@@ -7,7 +7,9 @@ let paginaProtegida = false;
 // Dice si hay un token guardado
 function haySesion() {
   try {
-    return Boolean(sessionStorage.getItem(CLAVE_TOKEN));
+    const token = sessionStorage.getItem(CLAVE_TOKEN);
+    // "undefined" y "null" son textos que quedan si se guardó un token vacío
+    return Boolean(token) && token !== "undefined" && token !== "null";
   } catch {
     return false;
   }
