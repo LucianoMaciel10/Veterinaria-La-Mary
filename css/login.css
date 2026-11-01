@@ -12,3 +12,48 @@ body.pagina-login main {
 .login-contenedor {
   max-width: 420px;
 }
+
+/* Botón "Volver al inicio" (clase propia, no usa la clase btn de Bootstrap) */
+.boton-volver {
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  background-color: #efe7d8;
+  color: #6c4f3d;
+  border: 1px solid #d9cfc1;
+  text-decoration: none;
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    border-color 0.2s;
+}
+
+.boton-volver:hover,
+.boton-volver:focus-visible {
+  background-color: #6c4f3d;
+  border-color: #6c4f3d;
+  color: #fff;
+}
+
+/* Botón "Ingresar" (clase propia, no usa la clase btn de Bootstrap) */
+.boton-ingresar {
+  display: block;
+  padding: 0.5rem 1rem;
+  background-color: #6c4f3d;
+  border: 1px solid #6c4f3d;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    border-color 0.2s;
+}
+
+.boton-ingresar:hover:not(:disabled),
+.boton-ingresar:focus-visible {
+  background-color: #4a3525;
+  border-color: #4a3525;
+}
+
+/* Mientras dice "Ingresando..." */
+.boton-ingresar:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}

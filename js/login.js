@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   // si ya está logueado lo mando directo al index
-  if (sessionStorage.getItem("token")) {
+  if (haySesion()) {
     window.location.href = "index.html";
     return;
   }
