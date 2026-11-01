@@ -171,6 +171,92 @@
     <main id="historia-clinica">
       <section class="container my-5">
         <h2 class="mb-4">Historia clínica</h2>
+
+        <!-- FORMULARIO DE HISTORIA CLÍNICA -->
+        <form id="formHistoriaClinica" class="card p-4 shadow-sm mb-5">
+          <div
+            id="avisoSinDatos"
+            class="aviso-edicion d-none"
+            role="alert"
+          ></div>
+
+          <div class="row g-3">
+            <!-- Mascota -->
+            <div class="col-md-6">
+              <label for="selectMascota" class="form-label">Mascota</label>
+              <select class="form-select" id="selectMascota" required></select>
+            </div>
+
+            <!-- Veterinario -->
+            <div class="col-md-6">
+              <label for="selectVeterinario" class="form-label"
+                >Veterinario</label
+              >
+              <select
+                class="form-select"
+                id="selectVeterinario"
+                required
+              ></select>
+            </div>
+
+            <!-- Fecha y hora -->
+            <div class="col-md-6">
+              <label for="fechaHora" class="form-label">Fecha y hora</label>
+              <input
+                type="datetime-local"
+                class="form-control"
+                id="fechaHora"
+                required
+              />
+            </div>
+
+            <!-- Observaciones -->
+            <div class="col-12">
+              <label for="observaciones" class="form-label"
+                >Observaciones del profesional</label
+              >
+              <textarea
+                class="form-control"
+                id="observaciones"
+                rows="5"
+                required
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- Botón del Formulario -->
+          <div class="mt-4">
+            <button type="submit" class="btn btn-sitio" id="btnGuardarHistoria">
+              Guardar Historia Clínica
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <section class="container mb-5">
+        <h2 class="mb-4">
+          Historias clínicas registradas
+          <span
+            id="cantidadHistorias"
+            class="contador rounded px-3 py-1 text-white"
+          >
+            0
+          </span>
+        </h2>
+
+        <div class="table-responsive">
+          <table class="table table-striped table-hover align-middle">
+            <thead>
+              <tr>
+                <th scope="col">Fecha y hora</th>
+                <th scope="col">Mascota</th>
+                <th scope="col">Veterinario</th>
+                <th scope="col">Observaciones</th>
+              </tr>
+            </thead>
+            <tbody id="cuerpoTablaHistorias"></tbody>
+          </table>
+        </div>
       </section>
     </main>
     <footer>
