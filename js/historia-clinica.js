@@ -66,6 +66,8 @@ function cargarSelects() {
   avisoSinDatos.textContent = avisos.join(" ");
   avisoSinDatos.classList.toggle("d-none", !faltanDatos);
   btnGuardarHistoria.disabled = faltanDatos;
+  selectMascota.disabled = mascotas.length === 0;
+  selectVeterinario.disabled = veterinarios.length === 0;
 }
 
 // Formatea la fecha y hora para mostrarla en la tabla.
