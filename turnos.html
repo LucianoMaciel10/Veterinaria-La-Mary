@@ -15,8 +15,8 @@
       defer
     ></script>
     <script src="js/auth.js" defer></script>
-    <!-- PROTECCIÓN (Luciano, al final): descomentar cuando funcione el login -->
-    <!-- <script>document.addEventListener("DOMContentLoaded", protegerPagina);</script> -->
+    <!-- Protección: si no hay sesión, redirige al login -->
+    <script>document.addEventListener("DOMContentLoaded", () => protegerPagina());</script>
     <script src="js/storage.js" defer></script>
     <script src="js/turnos.js" defer></script>
   </head>
