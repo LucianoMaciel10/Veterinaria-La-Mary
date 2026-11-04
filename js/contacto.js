@@ -69,10 +69,10 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const mascota = document.getElementById("mascota").value.trim();
+    const nombre = document.getElementById("nombre").value.trim();
     mostrarMensaje(
       "exito",
-      `¡Gracias${mascota ? " y a " + mascota : ""}! Tu consulta se envió con éxito, te vamos a responder pronto.`
+      `¡Gracias ${nombre}! Tu consulta se envió con éxito, te vamos a responder pronto.`
     );
     form.reset();
   });
