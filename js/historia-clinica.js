@@ -9,6 +9,8 @@ const btnGuardarHistoria = document.getElementById("btnGuardarHistoria");
 const avisoSinDatos = document.getElementById("avisoSinDatos");
 const cuerpoTablaHistorias = document.getElementById("cuerpoTablaHistorias");
 const cantidadHistorias = document.getElementById("cantidadHistorias");
+const filtroHistoriasInput = document.getElementById("filtroHistorias");
+const btnLimpiarFiltro = document.getElementById("btnLimpiarFiltro");
 
 // Devuelve la fecha y hora actual en el formato del input datetime-local.
 function fechaHoraActual() {
@@ -145,36 +147,34 @@ function limpiarFormulario() {
   fechaHoraInput.value = fechaHoraActual();
 }
 
+// Normaliza texto para comparar: minúsculas, sin acentos y sin espacios extra.
+function normalizarTexto(texto) {
+  return String(texto ?? "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+}
+
+// Devuelve true si todos los términos buscados aparecen en el texto.
+function coincideConBusqueda(texto, terminos) {
+  const textoNormalizado = normalizarTexto(texto);
+  return terminos.every(function (termino) {
+    return textoNormalizado.includes(termino);
+  });
+}
+
 // Redibuja la tabla con lo que hay en LocalStorage y actualiza el contador.
 function renderTabla() {
   const historias = leerDatos("historiasClinicas");
   const mascotas = leerDatos("mascotas");
   const veterinarios = leerDatos("veterinarios");
 
-  cantidadHistorias.textContent = historias.length;
-  cuerpoTablaHistorias.replaceChildren();
+  const terminos = normalizarTexto(filtroHistoriasInput.value)
+    .split(/\s+/)
+    .filter(Boolean);
 
-  if (historias.length === 0) {
-    const fila = document.createElement("tr");
-    const celda = document.createElement("td");
-    celda.colSpan = 4;
-    celda.className = "text-center text-muted py-4";
-    celda.textContent = "Todavía no hay historias clínicas registradas.";
-    fila.appendChild(celda);
-    cuerpoTablaHistorias.appendChild(fila);
-    return;
-  }
-
-  // La más nueva primero.
-  const historiasOrdenadas = historias.slice().sort(function (a, b) {
-    const fechaA = new Date(a.fechaHora).getTime() || 0;
-    const fechaB = new Date(b.fechaHora).getTime() || 0;
-    return fechaB - fechaA;
-  });
-
-  historiasOrdenadas.forEach(function (historia) {
-    const fila = document.createElement("tr");
-
+  // Se resuelven las referencias una sola vez y se arma el texto buscable.
+  const filas = historias.map(function (historia) {
     const mascotaEncontrada = mascotas.find(function (mascota) {
       return mascota.idMascota === historia.mascota;
     });
@@ -182,27 +182,102 @@ function renderTabla() {
       return veterinario.idVeterinario === historia.veterinario;
     });
 
-    const datos = [
-      formatearFechaHora(historia.fechaHora),
-      mascotaEncontrada ? mascotaEncontrada.nombreMascota : "Eliminado",
-      veterinarioEncontrado ? veterinarioEncontrado.nombre : "Eliminado",
-    ];
+    const nombreMascota = mascotaEncontrada
+      ? mascotaEncontrada.nombreMascota
+      : "Eliminado";
+    const nombreDuenio = mascotaEncontrada ? mascotaEncontrada.nombreDuenio : "";
+    const nombreVeterinario = veterinarioEncontrado
+      ? veterinarioEncontrado.nombre
+      : "Eliminado";
 
-    datos.forEach(function (dato) {
+    return {
+      historia,
+      nombreMascota,
+      nombreVeterinario,
+      textoBusqueda: [
+        formatearFechaHora(historia.fechaHora),
+        historia.fechaHora,
+        nombreMascota,
+        nombreDuenio,
+        nombreVeterinario,
+        historia.observaciones,
+      ].join(" "),
+    };
+  });
+
+  const filasFiltradas =
+    terminos.length === 0
+      ? filas
+      : filas.filter(function (fila) {
+          return coincideConBusqueda(fila.textoBusqueda, terminos);
+        });
+
+  // La más nueva primero.
+  filasFiltradas.sort(function (a, b) {
+    const fechaA = new Date(a.historia.fechaHora).getTime() || 0;
+    const fechaB = new Date(b.historia.fechaHora).getTime() || 0;
+    return fechaB - fechaA;
+  });
+
+  cantidadHistorias.textContent =
+    terminos.length === 0
+      ? historias.length
+      : `${filasFiltradas.length} de ${historias.length}`;
+
+  cuerpoTablaHistorias.replaceChildren();
+
+  if (filasFiltradas.length === 0) {
+    const fila = document.createElement("tr");
+    const celda = document.createElement("td");
+    celda.colSpan = 4;
+    celda.className = "text-center text-muted py-4";
+    celda.textContent =
+      historias.length === 0
+        ? "Todavía no hay historias clínicas registradas."
+        : "No se encontraron historias clínicas para esa búsqueda.";
+    fila.appendChild(celda);
+    cuerpoTablaHistorias.appendChild(fila);
+    return;
+  }
+
+  filasFiltradas.forEach(function (fila) {
+    const tr = document.createElement("tr");
+
+    [
+      formatearFechaHora(fila.historia.fechaHora),
+      fila.nombreMascota,
+      fila.nombreVeterinario,
+    ].forEach(function (dato) {
       const celda = document.createElement("td");
       celda.textContent = dato;
-      fila.appendChild(celda);
+      tr.appendChild(celda);
     });
 
     const celdaObservaciones = document.createElement("td");
-    celdaObservaciones.textContent = historia.observaciones;
+    celdaObservaciones.textContent = fila.historia.observaciones;
     celdaObservaciones.style.whiteSpace = "pre-wrap";
     celdaObservaciones.style.wordBreak = "break-word";
-    fila.appendChild(celdaObservaciones);
+    tr.appendChild(celdaObservaciones);
 
-    cuerpoTablaHistorias.appendChild(fila);
+    cuerpoTablaHistorias.appendChild(tr);
   });
 }
+
+// Filtrado en vivo de la tabla.
+filtroHistoriasInput.addEventListener("input", function () {
+  btnLimpiarFiltro.classList.toggle(
+    "d-none",
+    filtroHistoriasInput.value.trim() === "",
+  );
+  renderTabla();
+});
+
+btnLimpiarFiltro.addEventListener("click", function () {
+  filtroHistoriasInput.value = "";
+  btnLimpiarFiltro.classList.add("d-none");
+  filtroHistoriasInput.focus();
+  renderTabla();
+});
 
 // Al cargar la página se muestra lo que ya está guardado.
 document.addEventListener("DOMContentLoaded", function () {
