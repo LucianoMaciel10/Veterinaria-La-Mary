@@ -168,11 +168,66 @@
         </div>
       </nav>
     </header>
+
     <main id="historial">
-      <section class="container my-5">
-        <h2 class="mb-4">Historial de la mascota</h2>
+      <section class="container my-5 pt-4">
+        <!-- Paso 7: Encabezado y Botón "Volver a mascotas" -->
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+          <h2 class="mb-0">Historial de la mascota</h2>
+          <a href="mascotas.html" class="btn btn-outline-secondary">
+            ← Volver a mascotas
+          </a>
+        </div>
+
+        <!-- Paso 3: Selector para elegir mascota -->
+        <div class="card p-3 mb-4 bg-light shadow-sm">
+          <label for="select-mascota" class="form-label fw-bold">Seleccionar mascota:</label>
+          <select id="select-mascota" class="form-select">
+            <!-- Cargado dinámicamente desde JS -->
+          </select>
+        </div>
+
+        <!-- Paso 6: Mensajes de estado y alertas -->
+        <div id="mensaje-estado" class="alert alert-info d-none" role="alert"></div>
+
+        <!-- Paso 4 y 5: Contenido del historial (Ficha de la mascota + Entradas) -->
+        <div id="contenido-historial">
+          
+          <!-- Paso 4: Ficha con datos de la mascota -->
+          <div class="card mb-4 border-primary shadow-sm">
+            <div class="card-header bg-primary text-white">
+              <h3 id="mascota-nombre" class="m-0 h4"></h3>
+            </div>
+            <div class="card-body">
+              <div class="row g-3">
+                <div class="col-12 col-md-6">
+                  <p class="mb-2"><strong>Dueño:</strong> <span id="mascota-dueno"></span></p>
+                  <p class="mb-2"><strong>Color:</strong> <span id="mascota-color"></span></p>
+                </div>
+                <div class="col-12 col-md-6">
+                  <p class="mb-2"><strong>Edad:</strong> <span id="mascota-edad"></span></p>
+                  <p class="mb-2"><strong>Peso:</strong> <span id="mascota-peso"></span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Paso 5: Contador y listado de entradas -->
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <h4 class="h5 mb-0">Entradas de la historia clínica</h4>
+            <span class="badge bg-secondary fs-6">
+              Total: <span id="contador-entradas">0</span>
+            </span>
+          </div>
+
+          <div id="lista-entradas" class="list-group">
+            <!-- Las entradas clínicas se cargan dinámicamente desde js/historial.js -->
+          </div>
+
+        </div>
       </section>
     </main>
+
     <footer>
       <div
         class="container-fluid px-0"
