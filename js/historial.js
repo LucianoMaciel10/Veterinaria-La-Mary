@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // 1. Cargar los datos desde el almacenamiento local usando storage.js
+  // Cargar datos utilizando storage.js
   const mascotas = leerDatos("mascotas") || [];
   const veterinarios = leerDatos("veterinarios") || [];
   const historiasClinicas = leerDatos("historiasClinicas") || [];
@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const mensajeEstado = document.getElementById("mensaje-estado");
   const contenidoHistorial = document.getElementById("contenido-historial");
 
-  // Mostrar contenedor de alertas (Paso 6)
+  // Función para mostrar alertas de estado (Paso 6)
   function mostrarMensaje(texto, tipo = "info") {
     mensajeEstado.className = `alert alert-${tipo}`;
     mensajeEstado.textContent = texto;
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     contenidoHistorial.classList.remove("d-none");
   }
 
-  // Paso 6: Caso sin mascotas registradas
+  // Paso 6: Caso sin mascotas en el sistema
   if (mascotas.length === 0) {
     mostrarMensaje("No hay mascotas registradas en el sistema.", "warning");
     selectMascota.innerHTML = '<option value="">Sin mascotas disponibles</option>';
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // Paso 3: Cargar opciones en el select
+  // Paso 3: Llenar el selector de mascotas
   selectMascota.innerHTML = '<option value="">-- Seleccione una mascota --</option>';
   mascotas.forEach((m) => {
     const option = document.createElement("option");
@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
     selectMascota.appendChild(option);
   });
 
-  // Leer parametro URL (?id=...)
+  // Leer ID de la URL (?id=...)
   const urlParams = new URLSearchParams(window.location.search);
   const idMascotaUrl = urlParams.get("id");
 
@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
     mostrarMensaje("Por favor, selecciona una mascota para ver su historial.", "info");
   }
 
-  // Evento al cambiar la opción del selector
+  // Evento al seleccionar en el dropdown
   selectMascota.addEventListener("change", (e) => {
     const idSeleccionado = e.target.value;
     if (idSeleccionado) {
@@ -67,26 +67,26 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Renderizar la ficha de la mascota y sus historias clínicas
+  // Renderizado de ficha e historias clínicas
   function cargarHistorial(id) {
     const mascota = mascotas.find((m) => (m.idMascota || m.id) == id);
     if (!mascota) return;
 
     ocultarMensaje();
 
-    // Paso 4: Mostrar datos de la mascota
+    // Paso 4: Ficha de datos de la mascota
     document.getElementById("mascota-nombre").textContent = mascota.nombreMascota || mascota.nombre;
     document.getElementById("mascota-dueno").textContent = mascota.nombreDuenio || mascota.dueno || mascota.duenio || "N/A";
     document.getElementById("mascota-color").textContent = mascota.color || "N/A";
     document.getElementById("mascota-edad").textContent = mascota.edad ? `${mascota.edad} ${Number(mascota.edad) === 1 ? "año" : "años"}` : "N/A";
     document.getElementById("mascota-peso").textContent = mascota.peso ? `${Number(mascota.peso).toLocaleString("es-AR")} kg` : "N/A";
 
-    // Paso 5: Filtrar historias clínicas asociadas a la mascota
+    // Paso 5: Filtrar entradas de la mascota
     const entradas = historiasClinicas.filter(
       (e) => (e.idMascota || e.mascotaId) == id
     );
 
-    // Ordenar: la más nueva primero
+    // Ordenar entradas: la más reciente primero
     entradas.sort((a, b) => new Date(b.fechaHora || b.fecha) - new Date(a.fechaHora || a.fecha));
 
     // Contador de entradas
@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const contenedorLista = document.getElementById("lista-entradas");
     contenedorLista.innerHTML = "";
 
-    // Paso 6: Mascota sin entradas
+    // Paso 6: Mascota sin entradas cargadas
     if (entradas.length === 0) {
       contenedorLista.innerHTML = `
         <div class="alert alert-secondary mb-0">
@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Paso 5: Mostrar la lista de entradas
+    // Paso 5: Renderizar cada entrada clínica
     entradas.forEach((entrada) => {
       const vet = veterinarios.find(
         (v) => (v.idVeterinario || v.id) == (entrada.idVeterinario || entrada.veterinarioId)

@@ -75,11 +75,20 @@ main .table {
   --bs-table-border-color: rgba(178, 91, 41, 0.25);
   border: 1px solid var(--color-borde);
   table-layout: fixed;
-  min-width: 760px;
+  min-width: 850px;
 }
 
+/* MODIFICADO (Paso 2): Ensanchado a 290px para dar espacio a los 3 botones en Acciones */
 main .table th:last-child {
-  width: 200px;
+  width: 290px;
+}
+
+main .table td:last-child {
+  white-space: nowrap;
+}
+
+main .table td:last-child .btn {
+  margin-right: 2px;
 }
 
 main .table thead th {

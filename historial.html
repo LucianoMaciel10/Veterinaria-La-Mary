@@ -171,7 +171,7 @@
 
     <main id="historial">
       <section class="container my-5 pt-4">
-        <!-- Paso 7: Encabezado y Botón "Volver a mascotas" -->
+        <!-- Paso 7: Título y Botón "Volver a mascotas" -->
         <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
           <h2 class="mb-0">Historial de la mascota</h2>
           <a href="mascotas.html" class="btn btn-outline-secondary">
@@ -183,14 +183,14 @@
         <div class="card p-3 mb-4 bg-light shadow-sm">
           <label for="select-mascota" class="form-label fw-bold">Seleccionar mascota:</label>
           <select id="select-mascota" class="form-select">
-            <!-- Cargado dinámicamente desde JS -->
+            <!-- Cargado dinámicamente con JS -->
           </select>
         </div>
 
-        <!-- Paso 6: Mensajes de estado y alertas -->
+        <!-- Paso 6: Alertas de estado -->
         <div id="mensaje-estado" class="alert alert-info d-none" role="alert"></div>
 
-        <!-- Paso 4 y 5: Contenido del historial (Ficha de la mascota + Entradas) -->
+        <!-- Paso 4 y 5: Ficha de la mascota + Historias clínicas -->
         <div id="contenido-historial">
           
           <!-- Paso 4: Ficha con datos de la mascota -->
@@ -212,7 +212,7 @@
             </div>
           </div>
 
-          <!-- Paso 5: Contador y listado de entradas -->
+          <!-- Paso 5: Lista de entradas con contador -->
           <div class="d-flex align-items-center justify-content-between mb-3">
             <h4 class="h5 mb-0">Entradas de la historia clínica</h4>
             <span class="badge bg-secondary fs-6">
@@ -221,7 +221,7 @@
           </div>
 
           <div id="lista-entradas" class="list-group">
-            <!-- Las entradas clínicas se cargan dinámicamente desde js/historial.js -->
+            <!-- Se carga dinámicamente con js/historial.js -->
           </div>
 
         </div>

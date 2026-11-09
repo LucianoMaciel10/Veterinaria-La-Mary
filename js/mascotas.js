@@ -25,7 +25,7 @@ formMascota.addEventListener("submit", function (e) {
   // --- VALIDACIONES REQUERIDAS ---
   if (!nombreMascota) {
     alert(
-      "Por favor, ingrese un nombre de mascota válido (no puede estar vacío ni contener solo espacios).",
+      "Por favor, ingrese un nombre de mascota válido (no puede estar vacío ni contener solo espacios)."
     );
     nombreMascotaInput.focus();
     return;
@@ -169,13 +169,19 @@ function renderTabla() {
       `${Number(m.peso).toLocaleString("es-AR")} kg`,
     ].forEach((texto) => {
       const td = document.createElement("td");
-      td.textContent = texto; // textContent evita inyección de HTML
+      td.textContent = texto;
       tr.appendChild(td);
     });
 
     // Acciones
     const tdAcciones = document.createElement("td");
     tdAcciones.className = "text-nowrap";
+
+    // MODIFICADO (Paso 1): Botón "Ver historial" redirigiendo a historial.html con el id en la URL
+    const btnHistorial = document.createElement("a");
+    btnHistorial.className = "btn btn-sm btn-info me-2";
+    btnHistorial.textContent = "Ver historial";
+    btnHistorial.href = `historial.html?id=${m.idMascota}`;
 
     const btnEditar = document.createElement("button");
     btnEditar.type = "button";
@@ -193,7 +199,8 @@ function renderTabla() {
     btnEliminar.textContent = "Eliminar";
     btnEliminar.addEventListener("click", () => eliminarMascota(m.idMascota));
 
-    tdAcciones.append(btnEditar, btnEliminar);
+    // Agregar los 3 botones juntos
+    tdAcciones.append(btnHistorial, btnEditar, btnEliminar);
     tr.appendChild(tdAcciones);
     cuerpo.appendChild(tr);
   });
@@ -208,10 +215,9 @@ function eliminarMascota(id) {
 
   guardarDatos(
     "mascotas",
-    mascotas.filter((x) => x.idMascota !== id),
+    mascotas.filter((x) => x.idMascota !== id)
   );
 
-  // Si justo se estaba editando esa mascota, se limpia el formulario
   if (idInput.value === id) limpiarFormulario();
 
   renderTabla();
