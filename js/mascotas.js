@@ -1,227 +1,57 @@
-// CAPTURAR ELEMENTOS DEL DOM
-const formMascota = document.getElementById("formMascota");
-const idInput = document.getElementById("idMascota");
-const nombreMascotaInput = document.getElementById("nombreMascota");
-const nombreDuenioInput = document.getElementById("nombreDuenio");
-const colorInput = document.getElementById("color");
-const edadInput = document.getElementById("edad");
-const pesoInput = document.getElementById("peso");
-const btnCancelar = document.getElementById("btnCancelar");
-const btnGuardar = document.getElementById("btnGuardar");
-const avisoEdicion = document.getElementById("avisoEdicion");
-const nombreEdicion = document.getElementById("nombreEdicion");
+document.addEventListener("DOMContentLoaded", () => {
+  const tablaMascotasBody = document.getElementById("tablaMascotasBody");
+  const mascotas = JSON.parse(localStorage.getItem("mascotas")) || [];
 
-// EVENTO AL ENVIAR EL FORMULARIO (SUBMIT)
-formMascota.addEventListener("submit", function (e) {
-  e.preventDefault();
+  function renderizarTablaMascotas() {
+    if (!tablaMascotasBody) return;
+    tablaMascotasBody.replaceChildren();
 
-  const nombreMascota = nombreMascotaInput.value.trim();
-  const nombreDuenio = nombreDuenioInput.value.trim();
-  const color = colorInput.value.trim();
-  const edad = parseInt(edadInput.value);
-  const peso = parseFloat(pesoInput.value);
-  const idExistente = idInput.value;
+    mascotas.forEach(mascota => {
+      const tr = document.createElement("tr");
 
-  // --- VALIDACIONES REQUERIDAS ---
-  if (!nombreMascota) {
-    alert(
-      "Por favor, ingrese un nombre de mascota válido (no puede estar vacío ni contener solo espacios)."
-    );
-    nombreMascotaInput.focus();
-    return;
-  }
+      const tdId = document.createElement("td");
+      tdId.textContent = mascota.idMascota;
 
-  if (!nombreDuenio) {
-    alert("Por favor, ingrese un nombre de dueño válido.");
-    nombreDuenioInput.focus();
-    return;
-  }
+      const tdNombre = document.createElement("td");
+      tdNombre.textContent = mascota.nombreMascota;
 
-  if (!color) {
-    alert("Por favor, ingrese un color válido.");
-    colorInput.focus();
-    return;
-  }
+      const tdDuenio = document.createElement("td");
+      tdDuenio.textContent = mascota.nombreDuenio || "N/A";
 
-  if (isNaN(edad) || !Number.isInteger(edad) || edad < 0) {
-    alert("La edad debe ser un número entero mayor o igual a cero.");
-    edadInput.focus();
-    return;
-  }
+      const tdColor = document.createElement("td");
+      tdColor.textContent = mascota.color || "N/A";
 
-  if (isNaN(peso) || peso <= 0) {
-    alert("El peso debe ser un número mayor a cero.");
-    pesoInput.focus();
-    return;
-  }
-  // ---------------------------------
+      const tdEdad = document.createElement("td");
+      tdEdad.textContent = (mascota.edad !== null && mascota.edad !== undefined && mascota.edad !== "")
+        ? `${mascota.edad} años`
+        : "N/A";
 
-  let listaMascotas = leerDatos("mascotas") || [];
+      const tdPeso = document.createElement("td");
+      tdPeso.textContent = (mascota.peso !== null && mascota.peso !== undefined && mascota.peso !== "")
+        ? `${mascota.peso} kg`
+        : "N/A";
 
-  if (idExistente) {
-    // EDITAR REGISTRO EXISTENTE
-    listaMascotas = listaMascotas.map((mascota) => {
-      if (mascota.idMascota === idExistente) {
-        return {
-          idMascota: idExistente,
-          nombreMascota,
-          nombreDuenio,
-          color,
-          edad,
-          peso,
-        };
-      }
-      return mascota;
+      const tdAcciones = document.createElement("td");
+
+      // Botón Ver historial con la clase del sitio
+      const btnHistorial = document.createElement("a");
+      btnHistorial.href = `historial.html?id=${mascota.idMascota}`;
+      btnHistorial.className = "btn btn-sm btn-sitio-oscuro me-2";
+      btnHistorial.textContent = "Ver historial";
+
+      tdAcciones.appendChild(btnHistorial);
+
+      tr.appendChild(tdId);
+      tr.appendChild(tdNombre);
+      tr.appendChild(tdDuenio);
+      tr.appendChild(tdColor);
+      tr.appendChild(tdEdad);
+      tr.appendChild(tdPeso);
+      tr.appendChild(tdAcciones);
+
+      tablaMascotasBody.appendChild(tr);
     });
-  } else {
-    // NUEVO REGISTRO
-    const nuevaMascota = {
-      idMascota: generarId(),
-      nombreMascota,
-      nombreDuenio,
-      color,
-      edad,
-      peso,
-    };
-    listaMascotas.push(nuevaMascota);
   }
 
-  guardarDatos("mascotas", listaMascotas);
-  limpiarFormulario();
-
-  renderTabla();
+  renderizarTablaMascotas();
 });
-
-// FUNCIÓN PARA CARGAR DATOS AL EDITAR
-function cargarEnFormulario(id) {
-  const listaMascotas = leerDatos("mascotas") || [];
-  const mascota = listaMascotas.find((item) => item.idMascota === id);
-
-  if (mascota) {
-    idInput.value = mascota.idMascota;
-    nombreMascotaInput.value = mascota.nombreMascota;
-    nombreDuenioInput.value = mascota.nombreDuenio;
-    colorInput.value = mascota.color;
-    edadInput.value = mascota.edad;
-    pesoInput.value = mascota.peso;
-    activarModoEdicion(mascota.nombreMascota);
-  }
-}
-
-// LIMPIAR FORMULARIO
-function limpiarFormulario() {
-  formMascota.reset();
-  idInput.value = "";
-  desactivarModoEdicion();
-}
-
-// Muestra que se está editando un registro existente
-function activarModoEdicion(nombre) {
-  nombreEdicion.textContent = nombre;
-  avisoEdicion.classList.remove("d-none");
-  formMascota.classList.add("en-edicion");
-  btnGuardar.textContent = "Guardar cambios";
-  btnCancelar.textContent = "Cancelar edición";
-}
-
-// Vuelve el formulario a su estado normal (alta de un registro nuevo)
-function desactivarModoEdicion() {
-  avisoEdicion.classList.add("d-none");
-  formMascota.classList.remove("en-edicion");
-  btnGuardar.textContent = "Guardar Mascota";
-  btnCancelar.textContent = "Cancelar";
-}
-
-btnCancelar.addEventListener("click", limpiarFormulario);
-
-// ==========================================================================
-// TABLA DE MASCOTAS
-// ==========================================================================
-
-// Redibuja la tabla con lo que hay en LocalStorage y actualiza el contador
-function renderTabla() {
-  const mascotas = leerDatos("mascotas") || [];
-  const cuerpo = document.getElementById("cuerpoTablaMascotas");
-  const cantidad = document.getElementById("cantidadMascotas");
-
-  cantidad.textContent = mascotas.length;
-  cuerpo.replaceChildren();
-
-  if (mascotas.length === 0) {
-    const tr = document.createElement("tr");
-    const td = document.createElement("td");
-    td.colSpan = 6;
-    td.className = "text-center text-muted py-4";
-    td.textContent = "Todavía no hay mascotas registradas.";
-    tr.appendChild(td);
-    cuerpo.appendChild(tr);
-    return;
-  }
-
-  mascotas.forEach((m) => {
-    const tr = document.createElement("tr");
-
-    [
-      m.nombreMascota,
-      m.nombreDuenio,
-      m.color,
-      `${m.edad} ${Number(m.edad) === 1 ? "año" : "años"}`,
-      `${Number(m.peso).toLocaleString("es-AR")} kg`,
-    ].forEach((texto) => {
-      const td = document.createElement("td");
-      td.textContent = texto;
-      tr.appendChild(td);
-    });
-
-    // Acciones
-    const tdAcciones = document.createElement("td");
-    tdAcciones.className = "text-nowrap";
-
-    // MODIFICADO (Paso 1): Botón "Ver historial" redirigiendo a historial.html con el id en la URL
-    const btnHistorial = document.createElement("a");
-    btnHistorial.className = "btn btn-sm btn-info me-2";
-    btnHistorial.textContent = "Ver historial";
-    btnHistorial.href = `historial.html?id=${m.idMascota}`;
-
-    const btnEditar = document.createElement("button");
-    btnEditar.type = "button";
-    btnEditar.className = "btn btn-sm btn-sitio me-2";
-    btnEditar.textContent = "Editar";
-    btnEditar.addEventListener("click", () => {
-      cargarEnFormulario(m.idMascota);
-      formMascota.scrollIntoView({ behavior: "smooth", block: "center" });
-      nombreMascotaInput.focus();
-    });
-
-    const btnEliminar = document.createElement("button");
-    btnEliminar.type = "button";
-    btnEliminar.className = "btn btn-sm btn-outline-danger";
-    btnEliminar.textContent = "Eliminar";
-    btnEliminar.addEventListener("click", () => eliminarMascota(m.idMascota));
-
-    // Agregar los 3 botones juntos
-    tdAcciones.append(btnHistorial, btnEditar, btnEliminar);
-    tr.appendChild(tdAcciones);
-    cuerpo.appendChild(tr);
-  });
-}
-
-// Elimina una mascota previa confirmación y actualiza la tabla
-function eliminarMascota(id) {
-  const mascotas = leerDatos("mascotas") || [];
-  const m = mascotas.find((x) => x.idMascota === id);
-  if (!m) return;
-  if (!confirm(`¿Seguro que querés eliminar a ${m.nombreMascota}?`)) return;
-
-  guardarDatos(
-    "mascotas",
-    mascotas.filter((x) => x.idMascota !== id)
-  );
-
-  if (idInput.value === id) limpiarFormulario();
-
-  renderTabla();
-}
-
-// Al cargar la página se muestra lo que ya está guardado
-document.addEventListener("DOMContentLoaded", renderTabla);
