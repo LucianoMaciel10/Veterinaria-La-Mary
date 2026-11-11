@@ -1,35 +1,43 @@
-/* Variables de color del sitio */
-:root {
-  --color-fondo-oscuro: #1d2a44;
-  --color-texto-claro: #ffffff;
-  --color-borde: #3b4b6b;
-  --color-principal: #2b3a55;
-  --color-secundario: #4a5c7d;
-}
-
-/* Estilos generales de administración */
-body {
-  background-color: #f8f9fa;
-  color: #333333;
-}
-
 .btn-sitio-oscuro {
   background-color: var(--color-fondo-oscuro);
   color: var(--color-texto-claro);
   border: 1px solid var(--color-fondo-oscuro);
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
 }
 
-.btn-sitio-oscuro:hover {
-  background-color: #152035;
+.btn-sitio-oscuro:hover,
+.btn-sitio-oscuro:focus {
+  background-color: var(--color-principal);
   color: var(--color-texto-claro);
+  border-color: var(--color-principal);
 }
 
 .contador {
   background-color: var(--color-fondo-oscuro);
+  color: var(--color-texto-claro);
   font-weight: 600;
 }
 
-/* Historial de una mascota */
+.form-label {
+  color: var(--color-fondo-oscuro);
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--color-borde);
+  box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.1);
+}
+
+.table th {
+  background-color: var(--color-fondo-oscuro);
+  color: var(--color-texto-claro);
+  border-bottom: 2px solid var(--color-borde);
+}
+
+.table td {
+  vertical-align: middle;
+}
+
 .ficha-mascota {
   background-color: var(--color-texto-claro);
   border: 1px solid var(--color-borde);

@@ -4,54 +4,81 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Historial Clínico - Veterinaria</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/administracion.css">
 </head>
 <body>
 
-<div class="container my-4">
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2>Historial Clínico</h2>
-    <a href="mascotas.html" class="btn btn-sitio-oscuro">Volver a mascotas</a>
-  </div>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-oscuro">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">Veterinaria</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="mascotas.html">Mascotas</a></li>
+            <li class="nav-item"><a class="nav-link" href="veterinarios.html">Veterinarios</a></li>
+            <li class="nav-item"><a class="nav-link" href="turnos.html">Turnos</a></li>
+            <li class="nav-item"><a class="nav-link" href="historia-clinica.html">Historia Clínica</a></li>
+            <li class="nav-item"><a class="nav-link active" href="historial.html">Historial</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
 
-  <!-- Selector de Mascota en formato de formulario del sitio -->
-  <form class="card p-3 mb-4 shadow-sm" onsubmit="return false;">
-    <div class="mb-0">
-      <label for="selectMascota" class="form-label">Seleccionar Mascota</label>
-      <select id="selectMascota" class="form-select">
-        <option value="">-- Seleccione una mascota --</option>
-      </select>
+  <main class="container my-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2>Historial Clínico</h2>
+      <a href="mascotas.html" class="btn btn-sitio-oscuro">Volver a mascotas</a>
     </div>
-  </form>
 
-  <!-- Ficha de la Mascota -->
-  <div id="fichaMascota" class="card ficha-mascota mb-4 shadow-sm d-none">
-    <div class="card-header">
-      <h5 class="card-title mb-0" id="mascotaNombre"></h5>
-    </div>
-    <div class="card-body">
-      <div class="row">
-        <div class="col-md-3"><strong>Dueño:</strong> <span id="mascotaDuenio"></span></div>
-        <div class="col-md-3"><strong>Color:</strong> <span id="mascotaColor"></span></div>
-        <div class="col-md-3"><strong>Edad:</strong> <span id="mascotaEdad"></span></div>
-        <div class="col-md-3"><strong>Peso:</strong> <span id="mascotaPeso"></span></div>
+    <form class="card p-3 mb-4 shadow-sm" onsubmit="return false;">
+      <div class="mb-0">
+        <label for="selectMascota" class="form-label">Seleccionar Mascota</label>
+        <select id="selectMascota" class="form-select">
+          <option value="">-- Seleccione una mascota --</option>
+        </select>
+      </div>
+    </form>
+
+    <div id="fichaMascota" class="card ficha-mascota mb-4 shadow-sm d-none">
+      <div class="card-header">
+        <h5 class="card-title mb-0" id="mascotaNombre"></h5>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-3"><strong>Dueño:</strong> <span id="mascotaDuenio"></span></div>
+          <div class="col-md-3"><strong>Color:</strong> <span id="mascotaColor"></span></div>
+          <div class="col-md-3"><strong>Edad:</strong> <span id="mascotaEdad"></span></div>
+          <div class="col-md-3"><strong>Peso:</strong> <span id="mascotaPeso"></span></div>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- Listado de Entradas del Historial -->
-  <div id="seccionHistorial" class="d-none">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-      <h4>Entradas del Historial</h4>
-      <span id="contadorEntradas" class="contador rounded px-3 py-1 text-white">Total: 0</span>
+    <div id="seccionHistorial" class="d-none">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4>Entradas del Historial</h4>
+        <span id="contadorEntradas" class="contador rounded px-3 py-1 text-white">Total: 0</span>
+      </div>
+      <ul id="listaHistorial" class="list-group"></ul>
     </div>
-    <ul id="listaHistorial" class="list-group"></ul>
-  </div>
 
-  <div id="mensajeError" class="alert alert-warning d-none" role="alert"></div>
-</div>
+    <div id="mensajeError" class="alert alert-warning d-none" role="alert"></div>
+  </main>
 
-<script src="js/historial.js"></script>
+  <footer class="bg-oscuro text-white text-center py-3 mt-auto">
+    <div class="container">
+      <p class="mb-0">&copy; Sistema de Gestión Veterinaria</p>
+    </div>
+  </footer>
+
+  <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/historial.js"></script>
 </body>
 </html>

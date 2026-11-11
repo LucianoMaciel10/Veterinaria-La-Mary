@@ -12,12 +12,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const mascotaEdad = document.getElementById("mascotaEdad");
   const mascotaPeso = document.getElementById("mascotaPeso");
 
-  // Obtención de datos desde localStorage
   const mascotas = JSON.parse(localStorage.getItem("mascotas")) || [];
   const veterinarios = JSON.parse(localStorage.getItem("veterinarios")) || [];
-  const entradas = JSON.parse(localStorage.getItem("entradas")) || [];
+  const entradas = JSON.parse(localStorage.getItem("historiasClinicas")) || [];
 
-  // 1. Poblar el select de mascotas
   mascotas.forEach(mascota => {
     const option = document.createElement("option");
     option.value = mascota.idMascota;
@@ -25,7 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
     selectMascota.appendChild(option);
   });
 
-  // 2. Registrar el evento 'change' antes de procesar el parámetro de la URL
   selectMascota.addEventListener("change", (e) => {
     const idSeleccionado = e.target.value;
     if (idSeleccionado) {
@@ -35,7 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // 3. Procesar parámetro ID de la URL
   const urlParams = new URLSearchParams(window.location.search);
   const idMascotaUrl = urlParams.get("id");
 
@@ -58,7 +54,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Cargar Ficha de Mascota con soporte correcto para valor 0
     mascotaNombre.textContent = mascota.nombreMascota;
     mascotaDuenio.textContent = mascota.nombreDuenio || "N/A";
     mascotaColor.textContent = mascota.color || "N/A";
@@ -73,10 +68,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     fichaMascota.classList.remove("d-none");
 
-    // Filtrar entradas pertenecientes a la mascota seleccionada
     const entradasMascota = entradas.filter(e => String(e.mascota) === String(idMascota));
 
-    // Renderizado seguro mediante manipulación del DOM sin innerHTML
     listaHistorial.replaceChildren();
 
     entradasMascota.forEach(entrada => {
@@ -90,7 +83,6 @@ document.addEventListener("DOMContentLoaded", () => {
       fechaEl.className = "fecha-entrada mb-0";
       fechaEl.textContent = entrada.fechaHora || "Fecha no registrada";
 
-      // Búsqueda del veterinario; si no se encuentra se asigna "Eliminado"
       const vet = veterinarios.find(v => String(v.idVeterinario) === String(entrada.veterinario));
       const vetNombre = vet ? vet.nombre : "Eliminado";
 
