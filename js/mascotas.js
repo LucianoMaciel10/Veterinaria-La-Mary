@@ -10,6 +10,8 @@ const btnCancelar = document.getElementById("btnCancelar");
 const btnGuardar = document.getElementById("btnGuardar");
 const avisoEdicion = document.getElementById("avisoEdicion");
 const nombreEdicion = document.getElementById("nombreEdicion");
+const filtroMascotasInput = document.getElementById("filtroMascotas");
+const btnLimpiarFiltro = document.getElementById("btnLimpiarFiltro");
 
 // EVENTO AL ENVIAR EL FORMULARIO (SUBMIT)
 formMascota.addEventListener("submit", function (e) {
@@ -25,7 +27,7 @@ formMascota.addEventListener("submit", function (e) {
   // --- VALIDACIONES REQUERIDAS ---
   if (!nombreMascota) {
     alert(
-      "Por favor, ingrese un nombre de mascota válido (no puede estar vacío ni contener solo espacios)."
+      "Por favor, ingrese un nombre de mascota válido (no puede estar vacío ni contener solo espacios).",
     );
     nombreMascotaInput.focus();
     return;
@@ -140,11 +142,26 @@ btnCancelar.addEventListener("click", limpiarFormulario);
 
 // Redibuja la tabla con lo que hay en LocalStorage y actualiza el contador
 function renderTabla() {
-  const mascotas = leerDatos("mascotas") || [];
+  const todas = leerDatos("mascotas") || [];
+  const terminos = terminosDeBusqueda(filtroMascotasInput.value);
+  const mascotas =
+    terminos.length === 0
+      ? todas
+      : todas.filter((m) =>
+          coincideConBusqueda(
+            [m.nombreMascota, m.nombreDuenio, m.color, m.edad, m.peso].join(
+              " ",
+            ),
+            terminos,
+          ),
+        );
   const cuerpo = document.getElementById("cuerpoTablaMascotas");
   const cantidad = document.getElementById("cantidadMascotas");
 
-  cantidad.textContent = mascotas.length;
+  cantidad.textContent =
+    terminos.length === 0
+      ? todas.length
+      : `${mascotas.length} de ${todas.length}`;
   cuerpo.replaceChildren();
 
   if (mascotas.length === 0) {
@@ -152,7 +169,10 @@ function renderTabla() {
     const td = document.createElement("td");
     td.colSpan = 6;
     td.className = "text-center text-muted py-4";
-    td.textContent = "Todavía no hay mascotas registradas.";
+    td.textContent =
+      todas.length === 0
+        ? "Todavía no hay mascotas registradas."
+        : "No se encontraron mascotas para esa búsqueda.";
     tr.appendChild(td);
     cuerpo.appendChild(tr);
     return;
@@ -215,13 +235,15 @@ function eliminarMascota(id) {
 
   guardarDatos(
     "mascotas",
-    mascotas.filter((x) => x.idMascota !== id)
+    mascotas.filter((x) => x.idMascota !== id),
   );
 
   if (idInput.value === id) limpiarFormulario();
 
   renderTabla();
 }
+
+activarBuscador(filtroMascotasInput, btnLimpiarFiltro, renderTabla);
 
 // Al cargar la página se muestra lo que ya está guardado
 document.addEventListener("DOMContentLoaded", renderTabla);

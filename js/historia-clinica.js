@@ -147,22 +147,6 @@ function limpiarFormulario() {
   fechaHoraInput.value = fechaHoraActual();
 }
 
-// Normaliza texto para comparar: minúsculas, sin acentos y sin espacios extra.
-function normalizarTexto(texto) {
-  return String(texto ?? "")
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase();
-}
-
-// Devuelve true si todos los términos buscados aparecen en el texto.
-function coincideConBusqueda(texto, terminos) {
-  const textoNormalizado = normalizarTexto(texto);
-  return terminos.every(function (termino) {
-    return textoNormalizado.includes(termino);
-  });
-}
-
 // Redibuja la tabla con lo que hay en LocalStorage y actualiza el contador.
 function renderTabla() {
   const historias = leerDatos("historiasClinicas");

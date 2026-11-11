@@ -13,6 +13,8 @@ const cuerpoTablaVeterinarios = document.getElementById(
   "cuerpoTablaVeterinarios",
 );
 const cantidadVeterinarios = document.getElementById("cantidadVeterinarios");
+const filtroVeterinariosInput = document.getElementById("filtroVeterinarios");
+const btnLimpiarFiltro = document.getElementById("btnLimpiarFiltro");
 
 //  EVENTO AL ENVIAR EL FORMULARIO (SUBMIT)
 formVeterinario.addEventListener("submit", function (e) {
@@ -131,9 +133,28 @@ btnCancelar.addEventListener("click", limpiarFormulario);
 
 // Muestra los veterinarios guardados en la tabla.
 function renderTabla() {
-  const listaVeterinarios = leerDatos("veterinarios");
+  const todos = leerDatos("veterinarios");
+  const terminos = terminosDeBusqueda(filtroVeterinariosInput.value);
+  const listaVeterinarios =
+    terminos.length === 0
+      ? todos
+      : todos.filter((vet) =>
+          coincideConBusqueda(
+            [
+              vet.matricula,
+              vet.nombre,
+              vet.especializacion,
+              vet.valorConsulta,
+            ].join(" "),
+            terminos,
+          ),
+        );
+
   cuerpoTablaVeterinarios.replaceChildren();
-  cantidadVeterinarios.textContent = listaVeterinarios.length;
+  cantidadVeterinarios.textContent =
+    terminos.length === 0
+      ? todos.length
+      : `${listaVeterinarios.length} de ${todos.length}`;
 
   if (listaVeterinarios.length === 0) {
     const fila = document.createElement("tr");
@@ -141,7 +162,10 @@ function renderTabla() {
 
     celda.colSpan = 5;
     celda.className = "text-center text-muted py-4";
-    celda.textContent = "Todavía no hay veterinarios registrados.";
+    celda.textContent =
+      todos.length === 0
+        ? "Todavía no hay veterinarios registrados."
+        : "No se encontraron veterinarios para esa búsqueda.";
 
     fila.appendChild(celda);
     cuerpoTablaVeterinarios.appendChild(fila);
@@ -216,4 +240,5 @@ function eliminarVeterinario(id) {
 }
 
 // Dibuja la tabla al abrir la página.
+activarBuscador(filtroVeterinariosInput, btnLimpiarFiltro, renderTabla);
 renderTabla();

@@ -10,6 +10,8 @@ const botonGuardarTurno = document.getElementById("btnGuardarTurno");
 const avisoCatalogos = document.getElementById("avisoCatalogos");
 const cuerpoTablaTurnos = document.getElementById("cuerpoTablaTurnos");
 const cantidadTurnos = document.getElementById("cantidadTurnos");
+const filtroTurnosInput = document.getElementById("filtroTurnos");
+const btnLimpiarFiltro = document.getElementById("btnLimpiarFiltro");
 
 const formatoMoneda = new Intl.NumberFormat("es-AR", {
   style: "currency",
@@ -68,8 +70,7 @@ function actualizarCatalogos() {
     veterinarios,
     "Seleccioná un veterinario",
     "idVeterinario",
-    (veterinario) =>
-      `${veterinario.nombre} — ${veterinario.especializacion}`,
+    (veterinario) => `${veterinario.nombre} — ${veterinario.especializacion}`,
   );
 
   selectorMascota.disabled = mascotas.length === 0;
@@ -122,19 +123,54 @@ function agregarCelda(fila, texto) {
 }
 
 function renderTablaTurnos() {
-  const turnos = leerDatos("turnos").slice().sort((a, b) => {
-    return new Date(a.fechaHora).getTime() - new Date(b.fechaHora).getTime();
-  });
+  const todos = leerDatos("turnos")
+    .slice()
+    .sort((a, b) => {
+      return new Date(a.fechaHora).getTime() - new Date(b.fechaHora).getTime();
+    });
 
   const mascotas = leerMascotas();
   const veterinarios = leerVeterinarios();
+  const terminos = terminosDeBusqueda(filtroTurnosInput.value);
+
+  const turnos =
+    terminos.length === 0
+      ? todos
+      : todos.filter((turno) => {
+          const mascota = mascotas.find(
+            (item) => item.idMascota === turno.mascota,
+          );
+          const veterinario = veterinarios.find(
+            (item) => item.idVeterinario === turno.veterinario,
+          );
+
+          return coincideConBusqueda(
+            [
+              formatearFechaHora(turno.fechaHora),
+              mascota ? mascota.nombreMascota : "Eliminado",
+              veterinario ? veterinario.nombre : "Eliminado",
+              veterinario
+                ? formatoMoneda.format(Number(veterinario.valorConsulta))
+                : "Eliminado",
+            ].join(" "),
+            terminos,
+          );
+        });
 
   cuerpoTablaTurnos.replaceChildren();
-  cantidadTurnos.textContent = turnos.length;
+  cantidadTurnos.textContent =
+    terminos.length === 0
+      ? todos.length
+      : `${turnos.length} de ${todos.length}`;
 
   if (turnos.length === 0) {
     const fila = document.createElement("tr");
-    const celda = agregarCelda(fila, "Todavía no hay turnos agendados.");
+    const celda = agregarCelda(
+      fila,
+      todos.length === 0
+        ? "Todavía no hay turnos agendados."
+        : "No se encontraron turnos para esa búsqueda.",
+    );
     celda.colSpan = 5;
     celda.className = "text-center text-muted py-4";
     cuerpoTablaTurnos.appendChild(fila);
@@ -144,9 +180,7 @@ function renderTablaTurnos() {
   turnos.forEach((turno) => {
     const fila = document.createElement("tr");
 
-    const mascota = mascotas.find(
-      (item) => item.idMascota === turno.mascota,
-    );
+    const mascota = mascotas.find((item) => item.idMascota === turno.mascota);
     const veterinario = veterinarios.find(
       (item) => item.idVeterinario === turno.veterinario,
     );
@@ -166,9 +200,7 @@ function renderTablaTurnos() {
     botonEliminar.type = "button";
     botonEliminar.className = "btn btn-sm btn-outline-danger";
     botonEliminar.textContent = "Eliminar";
-    botonEliminar.addEventListener("click", () =>
-      eliminarTurno(turno.idTurno),
-    );
+    botonEliminar.addEventListener("click", () => eliminarTurno(turno.idTurno));
 
     celdaAcciones.appendChild(botonEliminar);
     fila.appendChild(celdaAcciones);
@@ -236,8 +268,7 @@ formularioTurno.addEventListener("submit", (evento) => {
   const turnos = leerDatos("turnos");
   const horarioOcupado = turnos.some(
     (turno) =>
-      turno.veterinario === idVeterinario &&
-      turno.fechaHora === fechaHora,
+      turno.veterinario === idVeterinario && turno.fechaHora === fechaHora,
   );
 
   if (horarioOcupado) {
@@ -261,6 +292,7 @@ formularioTurno.addEventListener("submit", (evento) => {
 
 selectorVeterinario.addEventListener("change", actualizarCostoConsulta);
 
+activarBuscador(filtroTurnosInput, btnLimpiarFiltro, renderTablaTurnos);
 actualizarCatalogos();
 actualizarFechaMinima();
 actualizarCostoConsulta();
