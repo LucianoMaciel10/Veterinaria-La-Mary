@@ -1,84 +1,250 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Historial Clínico - Veterinaria</title>
-  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/administracion.css">
-</head>
-<body>
-
-  <header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-oscuro">
-      <div class="container">
-        <a class="navbar-brand" href="index.html">Veterinaria</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item"><a class="nav-link" href="mascotas.html">Mascotas</a></li>
-            <li class="nav-item"><a class="nav-link" href="veterinarios.html">Veterinarios</a></li>
-            <li class="nav-item"><a class="nav-link" href="turnos.html">Turnos</a></li>
-            <li class="nav-item"><a class="nav-link" href="historia-clinica.html">Historia Clínica</a></li>
-            <li class="nav-item"><a class="nav-link active" href="historial.html">Historial</a></li>
-          </ul>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Historial de la mascota | Veterinaria La Mary</title>
+    <link
+      href="node_modules/bootstrap/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/administracion.css" />
+    <script
+      src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+      defer
+    ></script>
+    <script src="js/auth.js" defer></script>
+    <!-- PROTECCIÓN (Luciano, al final): descomentar cuando funcione el login -->
+    <!-- <script>document.addEventListener("DOMContentLoaded", protegerPagina);</script> -->
+    <script src="js/storage.js" defer></script>
+    <script src="js/historial.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-xxl fixed-top py-0">
+        <div class="container-fluid px-4 flex-nowrap">
+          <a
+            class="navbar-brand d-flex align-items-center flex-shrink-1 py-0"
+            href="index.html"
+          >
+            <img
+              class="huella-perro w-auto flex-shrink-0"
+              src="assets/paw.png"
+              alt="logo huella de perro"
+            />
+            <h1>
+              Veterinaria <span style="white-space: nowrap">La Mary</span>
+            </h1>
+          </a>
+          <button
+            class="navbar-toggler ms-auto flex-shrink-0"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#menuPrincipal"
+            aria-controls="menuPrincipal"
+            aria-expanded="false"
+            aria-label="Abrir menú"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse w-100" id="menuPrincipal">
+            <ul class="navbar-nav ms-auto py-1 gap-xxl-2">
+              <li class="nav-item">
+                <a
+                  class="nav-link d-flex align-items-center justify-content-center justify-content-xxl-start"
+                  href="index.html"
+                >
+                  <img
+                    class="flex-shrink-0"
+                    src="assets/home.png"
+                    alt="logo de inicio"
+                  />
+                  Inicio
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link d-flex align-items-center justify-content-center justify-content-xxl-start"
+                  href="institucional.html"
+                >
+                  <img
+                    class="flex-shrink-0"
+                    src="assets/terms-info.png"
+                    alt="logo de institucional"
+                  />
+                  Institucional
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link d-flex align-items-center justify-content-center justify-content-xxl-start"
+                  href="contacto.html"
+                >
+                  <img
+                    class="flex-shrink-0"
+                    src="assets/phone-plus.png"
+                    alt="logo de contacto"
+                  />
+                  Contacto
+                </a>
+              </li>
+              <li class="nav-item" data-sesion="sin">
+                <a
+                  class="nav-link d-flex align-items-center justify-content-center justify-content-xxl-start"
+                  href="login.html"
+                >
+                  <img
+                    class="flex-shrink-0"
+                    src="assets/login.svg"
+                    alt="logo de ingresar"
+                  />
+                  Ingresar
+                </a>
+              </li>
+              <li class="nav-item dropdown d-none" data-sesion="con">
+                <a
+                  class="nav-link dropdown-toggle d-flex align-items-center justify-content-center justify-content-xxl-start active"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <img
+                    class="flex-shrink-0"
+                    src="assets/user-md.png"
+                    alt="logo de administración"
+                  />
+                  Administración
+                </a>
+                <ul class="dropdown-menu dropdown-menu-xxl-end">
+                  <li>
+                    <a
+                      class="dropdown-item text-center text-xxl-start active"
+                      aria-current="page"
+                      href="mascotas.html"
+                      >Mascotas</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item text-center text-xxl-start"
+                      href="veterinarios.html"
+                      >Veterinarios</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item text-center text-xxl-start"
+                      href="turnos.html"
+                      >Turnos</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item text-center text-xxl-start"
+                      href="historia-clinica.html"
+                      >Historia clínica</a
+                    >
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item d-none" data-sesion="con">
+                <a
+                  class="nav-link d-flex align-items-center justify-content-center justify-content-xxl-start"
+                  href="#"
+                  data-accion="cerrar-sesion"
+                >
+                  <img
+                    class="flex-shrink-0"
+                    src="assets/logout.svg"
+                    alt="logo de cerrar sesión"
+                  />
+                  Cerrar sesión
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
-    </nav>
-  </header>
+      </nav>
+    </header>
 
-  <main class="container my-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <h2>Historial Clínico</h2>
-      <a href="mascotas.html" class="btn btn-sitio-oscuro">Volver a mascotas</a>
-    </div>
-
-    <form class="card p-3 mb-4 shadow-sm" onsubmit="return false;">
-      <div class="mb-0">
-        <label for="selectMascota" class="form-label">Seleccionar Mascota</label>
-        <select id="selectMascota" class="form-select">
-          <option value="">-- Seleccione una mascota --</option>
-        </select>
-      </div>
-    </form>
-
-    <div id="fichaMascota" class="card ficha-mascota mb-4 shadow-sm d-none">
-      <div class="card-header">
-        <h5 class="card-title mb-0" id="mascotaNombre"></h5>
-      </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-md-3"><strong>Dueño:</strong> <span id="mascotaDuenio"></span></div>
-          <div class="col-md-3"><strong>Color:</strong> <span id="mascotaColor"></span></div>
-          <div class="col-md-3"><strong>Edad:</strong> <span id="mascotaEdad"></span></div>
-          <div class="col-md-3"><strong>Peso:</strong> <span id="mascotaPeso"></span></div>
+    <main id="historial">
+      <section class="container my-5 pt-4">
+        <!-- Paso 7: Título y Botón "Volver a mascotas" -->
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+          <h2 class="mb-0">Historial de la mascota</h2>
+          <a href="mascotas.html" class="btn btn-sitio-oscuro">
+            ← Volver a mascotas
+          </a>
         </div>
-      </div>
-    </div>
 
-    <div id="seccionHistorial" class="d-none">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <h4>Entradas del Historial</h4>
-        <span id="contadorEntradas" class="contador rounded px-3 py-1 text-white">Total: 0</span>
-      </div>
-      <ul id="listaHistorial" class="list-group"></ul>
-    </div>
+        <!-- Paso 3: Selector para elegir mascota -->
+        <form class="card p-3 mb-4 shadow-sm">
+          <label for="select-mascota" class="form-label">Seleccionar mascota:</label>
+          <select id="select-mascota" class="form-select">
+            <!-- Cargado dinámicamente con JS -->
+          </select>
+        </form>
 
-    <div id="mensajeError" class="alert alert-warning d-none" role="alert"></div>
-  </main>
+        <!-- Paso 6: Alertas de estado -->
+        <div id="mensaje-estado" class="alert alert-info d-none" role="alert"></div>
 
-  <footer class="bg-oscuro text-white text-center py-3 mt-auto">
-    <div class="container">
-      <p class="mb-0">&copy; Sistema de Gestión Veterinaria</p>
-    </div>
-  </footer>
+        <!-- Paso 4 y 5: Ficha de la mascota + Historias clínicas -->
+        <div id="contenido-historial">
+          
+          <!-- Paso 4: Ficha con datos de la mascota -->
+          <div class="card ficha-mascota mb-4 shadow-sm">
+            <div class="card-header">
+              <h3 id="mascota-nombre" class="m-0 h4"></h3>
+            </div>
+            <div class="card-body">
+              <div class="row g-3">
+                <div class="col-12 col-md-6">
+                  <p class="mb-2"><strong>Dueño:</strong> <span id="mascota-dueno"></span></p>
+                  <p class="mb-2"><strong>Color:</strong> <span id="mascota-color"></span></p>
+                </div>
+                <div class="col-12 col-md-6">
+                  <p class="mb-2"><strong>Edad:</strong> <span id="mascota-edad"></span></p>
+                  <p class="mb-2"><strong>Peso:</strong> <span id="mascota-peso"></span></p>
+                </div>
+              </div>
+            </div>
+          </div>
 
-  <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="js/storage.js"></script>
-  <script src="js/auth.js"></script>
-  <script src="js/historial.js"></script>
-</body>
-</html>
+          <!-- Paso 5: Lista de entradas con contador -->
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <h4 class="h5 mb-0">Entradas de la historia clínica</h4>
+            <span class="contador rounded px-3 py-1 text-white">
+              Total: <span id="contador-entradas">0</span>
+            </span>
+          </div>
+
+          <div id="lista-entradas" class="list-group">
+            <!-- Se carga dinámicamente con js/historial.js -->
+          </div>
+
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div
+        class="container-fluid px-0"
+        style="max-width: 1200px; margin: 0 auto"
+      >
+        <div class="row g-4">
+          <div class="col-12 col-md-4 footer-seccion">
+            <h3>Navegación</h3>
+            <ul class="list-unstyled">
+              <li><a href="index.html">Inicio</a></li>
+              <li><a href="institucional.html">Institucional</a></li>
+              <li><a href="contacto.html">Contacto</a></li>
+              <li data-sesion="sin"><a href="login.html">Ingresar</a></li>
+              <li class="d-none" data-sesion="con">
+                <a href="mascotas.html">Mascotas</a>
+              </li>
+              <li class="d-none" data-sesion="con">
+                <a href="veterinarios.html">Veterinarios</a>
+              </li>
+              <li class="d-none"

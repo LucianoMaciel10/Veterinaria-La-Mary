@@ -1,151 +1,227 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const formMascota = document.getElementById("formMascota");
-  const inputIdMascota = document.getElementById("idMascota");
-  const inputNombreMascota = document.getElementById("nombreMascota");
-  const inputNombreDuenio = document.getElementById("nombreDuenio");
-  const inputColor = document.getElementById("color");
-  const inputEdad = document.getElementById("edad");
-  const inputPeso = document.getElementById("peso");
-  const cuerpoTablaMascotas = document.getElementById("cuerpoTablaMascotas");
+// CAPTURAR ELEMENTOS DEL DOM
+const formMascota = document.getElementById("formMascota");
+const idInput = document.getElementById("idMascota");
+const nombreMascotaInput = document.getElementById("nombreMascota");
+const nombreDuenioInput = document.getElementById("nombreDuenio");
+const colorInput = document.getElementById("color");
+const edadInput = document.getElementById("edad");
+const pesoInput = document.getElementById("peso");
+const btnCancelar = document.getElementById("btnCancelar");
+const btnGuardar = document.getElementById("btnGuardar");
+const avisoEdicion = document.getElementById("avisoEdicion");
+const nombreEdicion = document.getElementById("nombreEdicion");
 
-  let mascotas = JSON.parse(localStorage.getItem("mascotas")) || [];
+// EVENTO AL ENVIAR EL FORMULARIO (SUBMIT)
+formMascota.addEventListener("submit", function (e) {
+  e.preventDefault();
 
-  function renderizarTabla() {
-    if (!cuerpoTablaMascotas) return;
-    cuerpoTablaMascotas.replaceChildren();
+  const nombreMascota = nombreMascotaInput.value.trim();
+  const nombreDuenio = nombreDuenioInput.value.trim();
+  const color = colorInput.value.trim();
+  const edad = parseInt(edadInput.value);
+  const peso = parseFloat(pesoInput.value);
+  const idExistente = idInput.value;
 
-    mascotas.forEach(mascota => {
-      const tr = document.createElement("tr");
-
-      const tdId = document.createElement("td");
-      tdId.textContent = mascota.idMascota;
-
-      const tdNombre = document.createElement("td");
-      tdNombre.textContent = mascota.nombreMascota;
-
-      const tdDuenio = document.createElement("td");
-      tdDuenio.textContent = mascota.nombreDuenio || "N/A";
-
-      const tdColor = document.createElement("td");
-      tdColor.textContent = mascota.color || "N/A";
-
-      const tdEdad = document.createElement("td");
-      tdEdad.textContent = (mascota.edad !== null && mascota.edad !== undefined && mascota.edad !== "")
-        ? `${mascota.edad} años`
-        : "N/A";
-
-      const tdPeso = document.createElement("td");
-      tdPeso.textContent = (mascota.peso !== null && mascota.peso !== undefined && mascota.peso !== "")
-        ? `${mascota.peso} kg`
-        : "N/A";
-
-      const tdAcciones = document.createElement("td");
-
-      const btnHistorial = document.createElement("a");
-      btnHistorial.href = `historial.html?id=${mascota.idMascota}`;
-      btnHistorial.className = "btn btn-sm btn-sitio-oscuro me-2";
-      btnHistorial.textContent = "Ver historial";
-
-      const btnEditar = document.createElement("button");
-      btnEditar.type = "button";
-      btnEditar.className = "btn btn-sm btn-outline-primary me-2";
-      btnEditar.textContent = "Editar";
-      btnEditar.addEventListener("click", () => cargarFormularioEditar(mascota.idMascota));
-
-      const btnEliminar = document.createElement("button");
-      btnEliminar.type = "button";
-      btnEliminar.className = "btn btn-sm btn-outline-danger";
-      btnEliminar.textContent = "Eliminar";
-      btnEliminar.addEventListener("click", () => eliminarMascota(mascota.idMascota));
-
-      tdAcciones.appendChild(btnHistorial);
-      tdAcciones.appendChild(btnEditar);
-      tdAcciones.appendChild(btnEliminar);
-
-      tr.appendChild(tdId);
-      tr.appendChild(tdNombre);
-      tr.appendChild(tdDuenio);
-      tr.appendChild(tdColor);
-      tr.appendChild(tdEdad);
-      tr.appendChild(tdPeso);
-      tr.appendChild(tdAcciones);
-
-      cuerpoTablaMascotas.appendChild(tr);
-    });
+  // --- VALIDACIONES REQUERIDAS ---
+  if (!nombreMascota) {
+    alert(
+      "Por favor, ingrese un nombre de mascota válido (no puede estar vacío ni contener solo espacios)."
+    );
+    nombreMascotaInput.focus();
+    return;
   }
 
-  if (formMascota) {
-    formMascota.addEventListener("submit", (e) => {
-      e.preventDefault();
+  if (!nombreDuenio) {
+    alert("Por favor, ingrese un nombre de dueño válido.");
+    nombreDuenioInput.focus();
+    return;
+  }
 
-      const nombreMascota = inputNombreMascota ? inputNombreMascota.value.trim() : "";
-      const nombreDuenio = inputNombreDuenio ? inputNombreDuenio.value.trim() : "";
-      const color = inputColor ? inputColor.value.trim() : "";
-      const edadVal = inputEdad ? inputEdad.value.trim() : "";
-      const pesoVal = inputPeso ? inputPeso.value.trim() : "";
+  if (!color) {
+    alert("Por favor, ingrese un color válido.");
+    colorInput.focus();
+    return;
+  }
 
-      if (!nombreMascota || !nombreDuenio) {
-        alert("Por favor completa los campos requeridos (Nombre de mascota y Dueño).");
-        return;
-      }
+  if (isNaN(edad) || !Number.isInteger(edad) || edad < 0) {
+    alert("La edad debe ser un número entero mayor o igual a cero.");
+    edadInput.focus();
+    return;
+  }
 
-      const idEditar = inputIdMascota ? inputIdMascota.value : "";
+  if (isNaN(peso) || peso <= 0) {
+    alert("El peso debe ser un número mayor a cero.");
+    pesoInput.focus();
+    return;
+  }
+  // ---------------------------------
 
-      if (idEditar) {
-        const index = mascotas.findIndex(m => String(m.idMascota) === String(idEditar));
-        if (index !== -1) {
-          mascotas[index] = {
-            idMascota: mascotas[index].idMascota,
-            nombreMascota,
-            nombreDuenio,
-            color,
-            edad: edadVal !== "" ? Number(edadVal) : "",
-            peso: pesoVal !== "" ? Number(pesoVal) : ""
-          };
-        }
-        if (inputIdMascota) inputIdMascota.value = "";
-      } else {
-        const nuevoId = mascotas.length > 0 
-          ? Math.max(...mascotas.map(m => Number(m.idMascota) || 0)) + 1 
-          : 1;
+  let listaMascotas = leerDatos("mascotas") || [];
 
-        const nuevaMascota = {
-          idMascota: nuevoId,
+  if (idExistente) {
+    // EDITAR REGISTRO EXISTENTE
+    listaMascotas = listaMascotas.map((mascota) => {
+      if (mascota.idMascota === idExistente) {
+        return {
+          idMascota: idExistente,
           nombreMascota,
           nombreDuenio,
           color,
-          edad: edadVal !== "" ? Number(edadVal) : "",
-          peso: pesoVal !== "" ? Number(pesoVal) : ""
+          edad,
+          peso,
         };
-
-        mascotas.push(nuevaMascota);
       }
-
-      localStorage.setItem("mascotas", JSON.stringify(mascotas));
-      formMascota.reset();
-      renderizarTabla();
+      return mascota;
     });
+  } else {
+    // NUEVO REGISTRO
+    const nuevaMascota = {
+      idMascota: generarId(),
+      nombreMascota,
+      nombreDuenio,
+      color,
+      edad,
+      peso,
+    };
+    listaMascotas.push(nuevaMascota);
   }
 
-  function cargarFormularioEditar(id) {
-    const mascota = mascotas.find(m => String(m.idMascota) === String(id));
-    if (!mascota) return;
+  guardarDatos("mascotas", listaMascotas);
+  limpiarFormulario();
 
-    if (inputIdMascota) inputIdMascota.value = mascota.idMascota;
-    if (inputNombreMascota) inputNombreMascota.value = mascota.nombreMascota;
-    if (inputNombreDuenio) inputNombreDuenio.value = mascota.nombreDuenio || "";
-    if (inputColor) inputColor.value = mascota.color || "";
-    if (inputEdad) inputEdad.value = (mascota.edad !== null && mascota.edad !== undefined) ? mascota.edad : "";
-    if (inputPeso) inputPeso.value = (mascota.peso !== null && mascota.peso !== undefined) ? mascota.peso : "";
-  }
-
-  function eliminarMascota(id) {
-    if (!confirm("¿Estás seguro de que deseas eliminar esta mascota?")) return;
-
-    mascotas = mascotas.filter(m => String(m.idMascota) !== String(id));
-    localStorage.setItem("mascotas", JSON.stringify(mascotas));
-    renderizarTabla();
-  }
-
-  renderizarTabla();
+  renderTabla();
 });
+
+// FUNCIÓN PARA CARGAR DATOS AL EDITAR
+function cargarEnFormulario(id) {
+  const listaMascotas = leerDatos("mascotas") || [];
+  const mascota = listaMascotas.find((item) => item.idMascota === id);
+
+  if (mascota) {
+    idInput.value = mascota.idMascota;
+    nombreMascotaInput.value = mascota.nombreMascota;
+    nombreDuenioInput.value = mascota.nombreDuenio;
+    colorInput.value = mascota.color;
+    edadInput.value = mascota.edad;
+    pesoInput.value = mascota.peso;
+    activarModoEdicion(mascota.nombreMascota);
+  }
+}
+
+// LIMPIAR FORMULARIO
+function limpiarFormulario() {
+  formMascota.reset();
+  idInput.value = "";
+  desactivarModoEdicion();
+}
+
+// Muestra que se está editando un registro existente
+function activarModoEdicion(nombre) {
+  nombreEdicion.textContent = nombre;
+  avisoEdicion.classList.remove("d-none");
+  formMascota.classList.add("en-edicion");
+  btnGuardar.textContent = "Guardar cambios";
+  btnCancelar.textContent = "Cancelar edición";
+}
+
+// Vuelve el formulario a su estado normal (alta de un registro nuevo)
+function desactivarModoEdicion() {
+  avisoEdicion.classList.add("d-none");
+  formMascota.classList.remove("en-edicion");
+  btnGuardar.textContent = "Guardar Mascota";
+  btnCancelar.textContent = "Cancelar";
+}
+
+btnCancelar.addEventListener("click", limpiarFormulario);
+
+// ==========================================================================
+// TABLA DE MASCOTAS
+// ==========================================================================
+
+// Redibuja la tabla con lo que hay en LocalStorage y actualiza el contador
+function renderTabla() {
+  const mascotas = leerDatos("mascotas") || [];
+  const cuerpo = document.getElementById("cuerpoTablaMascotas");
+  const cantidad = document.getElementById("cantidadMascotas");
+
+  cantidad.textContent = mascotas.length;
+  cuerpo.replaceChildren();
+
+  if (mascotas.length === 0) {
+    const tr = document.createElement("tr");
+    const td = document.createElement("td");
+    td.colSpan = 6;
+    td.className = "text-center text-muted py-4";
+    td.textContent = "Todavía no hay mascotas registradas.";
+    tr.appendChild(td);
+    cuerpo.appendChild(tr);
+    return;
+  }
+
+  mascotas.forEach((m) => {
+    const tr = document.createElement("tr");
+
+    [
+      m.nombreMascota,
+      m.nombreDuenio,
+      m.color,
+      `${m.edad} ${Number(m.edad) === 1 ? "año" : "años"}`,
+      `${Number(m.peso).toLocaleString("es-AR")} kg`,
+    ].forEach((texto) => {
+      const td = document.createElement("td");
+      td.textContent = texto;
+      tr.appendChild(td);
+    });
+
+    // Acciones
+    const tdAcciones = document.createElement("td");
+    tdAcciones.className = "text-nowrap";
+
+    // MODIFICADO (Paso 1): Botón "Ver historial" redirigiendo a historial.html con el id en la URL
+    const btnHistorial = document.createElement("a");
+    btnHistorial.className = "btn btn-sm btn-sitio-oscuro me-2";
+    btnHistorial.textContent = "Ver historial";
+    btnHistorial.href = `historial.html?id=${m.idMascota}`;
+
+    const btnEditar = document.createElement("button");
+    btnEditar.type = "button";
+    btnEditar.className = "btn btn-sm btn-sitio me-2";
+    btnEditar.textContent = "Editar";
+    btnEditar.addEventListener("click", () => {
+      cargarEnFormulario(m.idMascota);
+      formMascota.scrollIntoView({ behavior: "smooth", block: "center" });
+      nombreMascotaInput.focus();
+    });
+
+    const btnEliminar = document.createElement("button");
+    btnEliminar.type = "button";
+    btnEliminar.className = "btn btn-sm btn-outline-danger";
+    btnEliminar.textContent = "Eliminar";
+    btnEliminar.addEventListener("click", () => eliminarMascota(m.idMascota));
+
+    // Agregar los 3 botones juntos
+    tdAcciones.append(btnHistorial, btnEditar, btnEliminar);
+    tr.appendChild(tdAcciones);
+    cuerpo.appendChild(tr);
+  });
+}
+
+// Elimina una mascota previa confirmación y actualiza la tabla
+function eliminarMascota(id) {
+  const mascotas = leerDatos("mascotas") || [];
+  const m = mascotas.find((x) => x.idMascota === id);
+  if (!m) return;
+  if (!confirm(`¿Seguro que querés eliminar a ${m.nombreMascota}?`)) return;
+
+  guardarDatos(
+    "mascotas",
+    mascotas.filter((x) => x.idMascota !== id)
+  );
+
+  if (idInput.value === id) limpiarFormulario();
+
+  renderTabla();
+}
+
+// Al cargar la página se muestra lo que ya está guardado
+document.addEventListener("DOMContentLoaded", renderTabla);

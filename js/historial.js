@@ -1,126 +1,148 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const selectMascota = document.getElementById("selectMascota");
-  const fichaMascota = document.getElementById("fichaMascota");
-  const seccionHistorial = document.getElementById("seccionHistorial");
-  const listaHistorial = document.getElementById("listaHistorial");
-  const contadorEntradas = document.getElementById("contadorEntradas");
-  const mensajeError = document.getElementById("mensajeError");
+  // Cargar datos utilizando storage.js
+  const mascotas = leerDatos("mascotas") || [];
+  const veterinarios = leerDatos("veterinarios") || [];
+  const historiasClinicas = leerDatos("historiasClinicas") || [];
 
-  const mascotaNombre = document.getElementById("mascotaNombre");
-  const mascotaDuenio = document.getElementById("mascotaDuenio");
-  const mascotaColor = document.getElementById("mascotaColor");
-  const mascotaEdad = document.getElementById("mascotaEdad");
-  const mascotaPeso = document.getElementById("mascotaPeso");
+  const selectMascota = document.getElementById("select-mascota");
+  const mensajeEstado = document.getElementById("mensaje-estado");
+  const contenidoHistorial = document.getElementById("contenido-historial");
 
-  const mascotas = JSON.parse(localStorage.getItem("mascotas")) || [];
-  const veterinarios = JSON.parse(localStorage.getItem("veterinarios")) || [];
-  const entradas = JSON.parse(localStorage.getItem("historiasClinicas")) || [];
+  // Función para mostrar alertas de estado (Paso 6)
+  function mostrarMensaje(texto, tipo = "info") {
+    mensajeEstado.className = `alert alert-${tipo}`;
+    mensajeEstado.textContent = texto;
+    mensajeEstado.classList.remove("d-none");
+    contenidoHistorial.classList.add("d-none");
+  }
 
-  mascotas.forEach(mascota => {
+  function ocultarMensaje() {
+    mensajeEstado.classList.add("d-none");
+    contenidoHistorial.classList.remove("d-none");
+  }
+
+  // Paso 6: Caso sin mascotas en el sistema
+  if (mascotas.length === 0) {
+    mostrarMensaje("No hay mascotas registradas en el sistema.", "warning");
+    selectMascota.innerHTML = '<option value="">Sin mascotas disponibles</option>';
+    selectMascota.disabled = true;
+    return;
+  }
+
+  // Paso 3: Llenar el selector de mascotas
+  selectMascota.innerHTML = '<option value="">-- Seleccione una mascota --</option>';
+  mascotas.forEach((m) => {
     const option = document.createElement("option");
-    option.value = mascota.idMascota;
-    option.textContent = `${mascota.nombreMascota} (${mascota.nombreDuenio})`;
+    option.value = m.idMascota;
+    option.textContent = `${m.nombreMascota} (${m.nombreDuenio})`;
     selectMascota.appendChild(option);
   });
 
+  // Evento al seleccionar en el dropdown (registrado antes de revisar el id de la URL)
   selectMascota.addEventListener("change", (e) => {
     const idSeleccionado = e.target.value;
     if (idSeleccionado) {
-      cargarHistorialMascota(idSeleccionado);
+      window.history.pushState({}, "", `historial.html?id=${idSeleccionado}`);
+      cargarHistorial(idSeleccionado);
     } else {
-      ocultarDetalles();
+      mostrarMensaje("Por favor, selecciona una mascota para ver su historial.", "info");
     }
   });
 
+  // Leer ID de la URL (?id=...)
   const urlParams = new URLSearchParams(window.location.search);
   const idMascotaUrl = urlParams.get("id");
 
   if (idMascotaUrl) {
-    selectMascota.value = idMascotaUrl;
-    const existe = mascotas.some(m => String(m.idMascota) === String(idMascotaUrl));
-    if (existe) {
-      cargarHistorialMascota(idMascotaUrl);
-    } else {
-      mostrarError("La mascota especificada no existe en el sistema.");
+    const existe = mascotas.some((m) => m.idMascota == idMascotaUrl);
+    if (!existe) {
+      // Paso 6: ID que no existe
+      mostrarMensaje(`La mascota con ID ${idMascotaUrl} no existe.`, "danger");
+      return;
     }
+    selectMascota.value = idMascotaUrl;
+    cargarHistorial(idMascotaUrl);
+  } else {
+    // Paso 6: Ninguna mascota elegida inicialmente
+    mostrarMensaje("Por favor, selecciona una mascota para ver su historial.", "info");
   }
 
-  function cargarHistorialMascota(idMascota) {
-    ocultarMensajes();
-    const mascota = mascotas.find(m => String(m.idMascota) === String(idMascota));
+  // Renderizado de ficha e historias clínicas
+  function cargarHistorial(id) {
+    const mascota = mascotas.find((m) => m.idMascota == id);
+    if (!mascota) return;
 
-    if (!mascota) {
-      mostrarError("No se encontró la mascota seleccionada.");
+    ocultarMensaje();
+
+    // Paso 4: Ficha de datos de la mascota
+    document.getElementById("mascota-nombre").textContent = mascota.nombreMascota;
+    document.getElementById("mascota-dueno").textContent = mascota.nombreDuenio;
+    document.getElementById("mascota-color").textContent = mascota.color;
+    document.getElementById("mascota-edad").textContent = `${mascota.edad} ${Number(mascota.edad) === 1 ? "año" : "años"}`;
+    document.getElementById("mascota-peso").textContent = `${Number(mascota.peso).toLocaleString("es-AR")} kg`;
+
+    // Paso 5: Filtrar entradas de la mascota
+    const entradas = historiasClinicas.filter((e) => e.mascota == id);
+
+    // Ordenar entradas: la más reciente primero
+    entradas.sort((a, b) => new Date(b.fechaHora) - new Date(a.fechaHora));
+
+    // Contador de entradas
+    document.getElementById("contador-entradas").textContent = entradas.length;
+
+    const contenedorLista = document.getElementById("lista-entradas");
+    contenedorLista.innerHTML = "";
+
+    // Paso 6: Mascota sin entradas cargadas
+    if (entradas.length === 0) {
+      contenedorLista.innerHTML = `
+        <div class="alert alert-secondary mb-0">
+          Esta mascota aún no posee entradas en su historia clínica.
+        </div>`;
       return;
     }
 
-    mascotaNombre.textContent = mascota.nombreMascota;
-    mascotaDuenio.textContent = mascota.nombreDuenio || "N/A";
-    mascotaColor.textContent = mascota.color || "N/A";
+    // Paso 5: Renderizar cada entrada clínica
+    entradas.forEach((entrada) => {
+      const vet = veterinarios.find((v) => v.idVeterinario == entrada.veterinario);
 
-    mascotaEdad.textContent = (mascota.edad !== null && mascota.edad !== undefined && mascota.edad !== "") 
-      ? `${mascota.edad} años` 
-      : "N/A";
+      const fechaObj = new Date(entrada.fechaHora);
+      const fechaFormateada = isNaN(fechaObj.getTime())
+        ? entrada.fechaHora
+        : fechaObj.toLocaleString("es-AR", { dateStyle: "short", timeStyle: "short" });
 
-    mascotaPeso.textContent = (mascota.peso !== null && mascota.peso !== undefined && mascota.peso !== "") 
-      ? `${mascota.peso} kg` 
-      : "N/A";
+      const item = document.createElement("div");
+      item.className = "list-group-item entrada-historial flex-column align-items-start mb-2 rounded border";
 
-    fichaMascota.classList.remove("d-none");
+      const encabezado = document.createElement("div");
+      encabezado.className = "d-flex w-100 justify-content-between align-items-center mb-1";
 
-    const entradasMascota = entradas.filter(e => String(e.mascota) === String(idMascota));
+      const fecha = document.createElement("h5");
+      fecha.className = "fecha-entrada h6 mb-0";
+      fecha.textContent = fechaFormateada;
 
-    listaHistorial.replaceChildren();
+      const infoVet = document.createElement("small");
+      infoVet.className = "text-muted";
+      infoVet.append("Vet: ");
+      const strongVet = document.createElement("strong");
+      if (vet) {
+        strongVet.textContent = vet.nombre;
+        infoVet.append(strongVet, ` (${vet.especializacion})`);
+      } else {
+        strongVet.textContent = "Eliminado";
+        infoVet.append(strongVet);
+      }
 
-    entradasMascota.forEach(entrada => {
-      const li = document.createElement("li");
-      li.className = "list-group-item entrada-historial mb-2 rounded shadow-sm";
+      encabezado.append(fecha, infoVet);
 
-      const headerDiv = document.createElement("div");
-      headerDiv.className = "d-flex w-100 justify-content-between align-items-center mb-2";
+      const observaciones = document.createElement("p");
+      observaciones.className = "mb-0 mt-2 text-dark";
+      observaciones.style.whiteSpace = "pre-wrap";
+      observaciones.style.wordBreak = "break-word";
+      observaciones.textContent = entrada.observaciones || "Sin observaciones.";
 
-      const fechaEl = document.createElement("h6");
-      fechaEl.className = "fecha-entrada mb-0";
-      fechaEl.textContent = entrada.fechaHora || "Fecha no registrada";
-
-      const vet = veterinarios.find(v => String(v.idVeterinario) === String(entrada.veterinario));
-      const vetNombre = vet ? vet.nombre : "Eliminado";
-
-      const vetEl = document.createElement("small");
-      vetEl.className = "text-muted";
-      vetEl.textContent = `Atendido por: ${vetNombre}`;
-
-      headerDiv.appendChild(fechaEl);
-      headerDiv.appendChild(vetEl);
-
-      const obsEl = document.createElement("p");
-      obsEl.className = "mb-1 text-secondary";
-      obsEl.style.whiteSpace = "pre-wrap";
-      obsEl.style.wordBreak = "break-word";
-      obsEl.textContent = entrada.observaciones || "";
-
-      li.appendChild(headerDiv);
-      li.appendChild(obsEl);
-      listaHistorial.appendChild(li);
+      item.append(encabezado, observaciones);
+      contenedorLista.appendChild(item);
     });
-
-    contadorEntradas.textContent = `Total: ${entradasMascota.length}`;
-    seccionHistorial.classList.remove("d-none");
-  }
-
-  function ocultarDetalles() {
-    fichaMascota.classList.add("d-none");
-    seccionHistorial.classList.add("d-none");
-    ocultarMensajes();
-  }
-
-  function mostrarError(msj) {
-    ocultarDetalles();
-    mensajeError.textContent = msj;
-    mensajeError.classList.remove("d-none");
-  }
-
-  function ocultarMensajes() {
-    mensajeError.classList.add("d-none");
   }
 });
