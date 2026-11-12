@@ -32,3 +32,7 @@
 ## 🔐 Acceso de administración
  
 Usuario de prueba (API DummyJSON): `emilys` / `emilyspass`.
+
+## 📹 Link del video final
+
+https://www.youtube.com/watch?v=9DiAw2i5Bag
